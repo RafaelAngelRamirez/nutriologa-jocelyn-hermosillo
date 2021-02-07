@@ -12,4 +12,7 @@ export class PacientesListaComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  pacientes: any[] = [];
+
+
 }

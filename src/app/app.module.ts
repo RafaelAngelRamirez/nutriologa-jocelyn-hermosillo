@@ -7,17 +7,31 @@ import { PacientesListaComponent } from './pacientes/pacientes-lista/pacientes-l
 import { PacienteCrearEditarDetalleComponent } from './pacientes/paciente-crear-editar-detalle/paciente-crear-editar-detalle.component';
 
 const appRoutes: Routes = [
-  { path: 'pacientes', component: HomeComponent },
+  { path: 'pacientes', component: PacientesListaComponent },
   {
-    path: 'about',
-    component: AboutComponent,
+    path: 'nuevo-paciente',
+    component: PacienteCrearEditarDetalleComponent,
   },
-  { path: 'dashboard', component: DashboardComponent },
+  {
+    path: 'editar/:id/paciente/:nombre',
+    component: PacienteCrearEditarDetalleComponent,
+  },
+  {
+    path: 'modificar/:id/paciente/:nombre',
+    component: PacienteCrearEditarDetalleComponent,
+  },{
+    path:"**",
+    redirectTo:"pacientes"
+  }
 ];
 
 @NgModule({
-  declarations: [AppComponent, PacientesListaComponent, PacienteCrearEditarDetalleComponent],
-  imports: [BrowserModule, RouterModule],
+  declarations: [
+    AppComponent,
+    PacientesListaComponent,
+    PacienteCrearEditarDetalleComponent,
+  ],
+  imports: [BrowserModule, RouterModule.forRoot(appRoutes)],
   providers: [],
   bootstrap: [AppComponent],
 })
