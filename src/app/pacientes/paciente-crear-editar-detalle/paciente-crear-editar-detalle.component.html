@@ -1,1 +1,174 @@
-<p>paciente-crear-editar-detalle works!</p>
+<div class="row">
+  <div class="col-12">
+    <div class="card shadow">
+      <div class="card-body">
+        <form [formGroup]="formulario">
+          <div class="row">
+            <!-- 
+=====================================
+ nombre
+=====================================
+-->
+            <div class="col-6">
+              <div class="form-group">
+                <input
+                  [ngClass]="{
+                    'is-invalid': vs.invalid(f('nombre')),
+                    'is-valid': vs.valid(f('nombre'))
+                  }"
+                  type="text"
+                  class="form-control"
+                  formControlName="nombre"
+                />
+                <small id="helpId" class="form-text text-muted">Nombre</small>
+                <app-validacion-inputs
+                  [campo]="f('nombre')"
+                  [directo]="true"
+                ></app-validacion-inputs>
+              </div>
+            </div>
+            <!-- 
+=====================================
+ END nombre
+=====================================
+-->
+
+            <!-- 
+=====================================
+ fechaDeNacimiento
+=====================================
+-->
+            <div class="col-6">
+              <div class="form-group">
+                <input
+                  [ngClass]="{
+                    'is-invalid': vs.invalid(f('fechaDeNacimiento')),
+                    'is-valid': vs.valid(f('fechaDeNacimiento'))
+                  }"
+                  type="date"
+                  class="form-control"
+                  formControlName="fechaDeNacimiento"
+                />
+                <small id="helpId" class="form-text text-muted"
+                  >Fecha de nacimiento</small
+                >
+                <app-validacion-inputs
+                  [campo]="f('fechaDeNacimiento')"
+                ></app-validacion-inputs>
+              </div>
+            </div>
+            <!-- 
+=====================================
+ END fechaDeNacimiento
+=====================================
+-->
+
+            <!-- 
+=====================================
+ celular
+=====================================
+-->
+            <div class="col-6">
+              <div class="form-group">
+                <input
+                  [ngClass]="{
+                    'is-invalid': vs.invalid(f('celular')),
+                    'is-valid': vs.valid(f('celular'))
+                  }"
+                  type="text"
+                  class="form-control"
+                  formControlName="celular"
+                />
+                <small id="helpId" class="form-text text-muted">Celular</small>
+                <app-validacion-inputs
+                  [campo]="f('celular')"
+                ></app-validacion-inputs>
+              </div>
+            </div>
+            <!-- 
+=====================================
+ END celular
+=====================================
+-->
+
+            <!-- 
+=====================================
+ Array metasDelPaciente 
+=====================================
+-->
+            <ng-container formArrayName="metasDelPaciente">
+              <ng-container
+                *ngFor="
+                  let dummy of fa('metasDelPaciente').controls;
+                  let i = index
+                "
+              >
+                <ng-container [formGroupName]="i">
+                  <!-- 
+    =====================================
+     metasDelPaciente
+    =====================================
+    -->
+                  <div class="col-6">
+                    <div class="form-group">
+                      <input
+                        [ngClass]="{
+                          'is-invalid': vs.invalid(dummy),
+                          'is-valid': vs.valid(dummy)
+                        }"
+                        type="text"
+                        class="form-control"
+                        [formControl]="dummy"
+                      />
+                      <small id="helpId" class="form-text text-muted">{{
+                        i
+                      }}</small>
+                      <app-validacion-inputs
+                        [campo]="dummy"
+                        [directo]="true"
+                      ></app-validacion-inputs>
+                    </div>
+                  </div>
+                  <!-- 
+    =====================================
+     END metasDelPaciente
+    =====================================
+    -->
+                </ng-container>
+              </ng-container>
+            </ng-container>
+
+            <div class="col-12">
+              <a
+                (click)="agregarMeta()"
+                class="btn btn-primary"
+                href="javascript:void(0)"
+                role="button"
+                >Agregar meta</a
+              >
+            </div>
+            <!-- 
+=====================================
+ END Array metasDelPaciente 
+=====================================
+-->
+
+            <div class="col-12">
+              <hr />
+              <a
+                (click)="submit(formulario.value, formulario.valid)"
+                class="btn btn-primary"
+                href="javascript:void(0)"
+                role="button"
+              >
+                Guardar</a
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<pre>{{ this.formulario.value | json }}</pre>

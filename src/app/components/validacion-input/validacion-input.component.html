@@ -1,0 +1,17 @@
+<ng-container *ngIf="campo && touched()">
+  <ng-container *ngFor="let error of listaDeErrores()">
+    <span class="text-danger slower animated fadeIn">
+      <i class="fas fa-times"></i>
+      {{ obtenerMensaje(error) }}
+    </span>
+    <hr />
+  </ng-container>
+
+  <pre *ngIf="debug">{{ campo?.errors | json }}</pre>
+</ng-container>
+
+<ng-container *ngIf="especial">
+  <span class="form-text text-danger">
+    <i class="fas fa-times animated tada"></i> {{ especial }}.</span
+  >
+</ng-container>
