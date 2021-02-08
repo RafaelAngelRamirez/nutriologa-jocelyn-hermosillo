@@ -33,10 +33,6 @@ const appRoutes: Routes = [
     path: 'detalle/:id/paciente/:nombre',
     component: PacienteCrearEditarDetalleComponent,
   },
-  {
-    path: '**',
-    redirectTo: 'pacientes',
-  },
 ];
 
 @NgModule({

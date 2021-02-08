@@ -5,19 +5,27 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Edad</th>
-              <th scope="col">Sexo</th>
-              <th scope="col">Celular</th>
+              <th></th>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Edad</th>
+              <th>Sexo</th>
+              <th>Celular</th>
             </tr>
           </thead>
           <tbody>
-            <tr
-              class="pointer-event"
-              routerLink="['detalle', paciente.nombre, paciente._id]"
-              *ngFor="let paciente of pacientes"
-            >
+            <tr *ngFor="let paciente of pacientes">
+              <td>
+                <a
+                  (click)="detalle(paciente)"
+                  class="btn btn-primary"
+                  href="javascript:void(0)"
+                  role="button"
+                >
+                  Detalle
+                </a>
+              </td>
+
               <td>{{ paciente._id }}</td>
               <td>{{ paciente.nombre }}</td>
               <td>{{ calcularEdad(paciente.fechaDeNacimiento) }}</td>

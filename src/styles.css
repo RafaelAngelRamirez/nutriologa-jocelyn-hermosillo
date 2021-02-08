@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+.pointer {
+  cursor: pointer;
+}
+
+.para-detalle > .detalle {
+  border: none !important;
+  padding-left: 0% !important;
+  border-bottom: solid !important;
+  border-bottom-width: 1px !important;
+  pointer-events: none !important;
+  border-color: #ccc !important;
+}

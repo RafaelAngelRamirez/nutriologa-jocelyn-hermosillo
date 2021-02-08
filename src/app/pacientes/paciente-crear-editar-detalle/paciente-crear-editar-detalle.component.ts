@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PacienteService } from '../../services/paciente.service';
 import { Paciente } from '../../models/paciente.model';
 import { ValidacionesService } from '../../services/validaciones.service';
 import { DatePipe, Location } from '@angular/common';
+import { ManejoDeMensajesService } from '../../services/manejo-de-mensajes.service';
+import { UtilidadesService } from '../../services/utilidades.service';
 
 @Component({
   selector: 'app-paciente-crear-editar-detalle',
@@ -13,30 +15,64 @@ import { DatePipe, Location } from '@angular/common';
 })
 export class PacienteCrearEditarDetalleComponent implements OnInit {
   constructor(
+    public utilidadesService: UtilidadesService,
+    private renderer: Renderer2,
     private location: Location,
     public vs: ValidacionesService,
     private pacienteService: PacienteService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private date: DatePipe
+    private date: DatePipe,
+    private notiService: ManejoDeMensajesService
   ) {}
-  cargando = false;
+  private _cargando = false;
+  public get cargando() {
+    return this._cargando;
+  }
+  public set cargando(value) {
+    this._cargando = value;
+
+    if (value) this.formulario?.disable();
+    else this.formulario?.enable();
+  }
 
   formulario: FormGroup;
+  esDetalle = false;
+  paciente: Paciente;
 
   ngOnInit(): void {
     this.obtenerId();
-    if (this.esRutaDetalle()) {
-      this.protocoloDetalle();
-    }
   }
 
   protocoloDetalle() {
-    throw new Error('Method not implemented.');
+    const callbackEstilos = (x) => {
+      this.renderer.setStyle(x, 'border', ' none');
+      this.renderer.setStyle(x, 'padding-left', ' 0%');
+      this.renderer.setStyle(x, 'border-bottom', ' solid');
+      this.renderer.setStyle(x, 'border-bottom-width', ' 1px');
+      this.renderer.setStyle(x, 'pointer-events', ' none');
+      this.renderer.setStyle(x, 'border-color', '#ccc');
+    };
+    setTimeout(() => {
+      // Agregamos una clase a todos los input.
+      document
+        .querySelectorAll<HTMLInputElement>('input')
+        .forEach(callbackEstilos);
+      document
+        .querySelectorAll<HTMLSelectElement>('select')
+        .forEach(callbackEstilos);
+
+      document
+        .querySelectorAll<HTMLSelectElement>("input[type='checkbox']")
+        .forEach((x) => {
+          this.renderer.setAttribute(x, 'disabled', 'true');
+        });
+    }, 100);
   }
 
   esRutaDetalle() {
     let url = this.activatedRoute.snapshot['_routerState'].url;
+    console.log(url);
     return url.includes('detalle');
   }
 
@@ -62,8 +98,9 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
   }
 
   crearFormulario(paciente: Partial<Paciente>) {
+    this.paciente = paciente as Paciente;
     this.formulario = new FormGroup({
-      _id: new FormControl(paciente._id, []),
+      _id: new FormControl(paciente._id),
       nombre: new FormControl(paciente.nombre, [Validators.required]),
       fechaDeNacimiento: new FormControl(
         this.formatearFecha(paciente.fechaDeNacimiento),
@@ -73,11 +110,60 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
       sexo: new FormControl(paciente.sexo, [Validators.required]),
       celular: new FormControl(paciente.celular, [Validators.required]),
       metasDelPaciente: new FormArray(
-        paciente.metasDelPaciente?.map((x) => new FormControl(x)) ?? []
+        paciente.metasDelPaciente?.map((x) => new FormControl(x)) ?? [
+          new FormControl(),
+        ]
       ),
+
+      condicionActual: new FormGroup({
+        embarazo: new FormControl(paciente.condicionActual?.embarazo),
+        dm: new FormControl(paciente.condicionActual?.dm),
+        ht: new FormControl(paciente.condicionActual?.ht),
+        dl: new FormControl(paciente.condicionActual?.dl),
+        au: new FormControl(paciente.condicionActual?.au),
+        ca: new FormControl(paciente.condicionActual?.ca),
+        cv: new FormControl(paciente.condicionActual?.cv),
+        otra: new FormControl(paciente.condicionActual?.otra),
+        problemasGastroIntestinales: new FormGroup({
+          estrenimiento: new FormControl(
+            paciente.condicionActual?.problemasGastroIntestinales?.estrenimiento
+          ),
+          diarrea: new FormControl(
+            paciente.condicionActual?.problemasGastroIntestinales?.diarrea
+          ),
+          alergias: new FormControl(
+            paciente.condicionActual?.problemasGastroIntestinales?.alergias
+          ),
+          vomito: new FormControl(
+            paciente.condicionActual?.problemasGastroIntestinales?.vomito
+          ),
+          colitis: new FormControl(
+            paciente.condicionActual?.problemasGastroIntestinales?.colitis
+          ),
+          gastritis: new FormControl(
+            paciente.condicionActual?.problemasGastroIntestinales?.gastritis
+          ),
+          nauseas: new FormControl(
+            paciente.condicionActual?.problemasGastroIntestinales?.nauseas
+          ),
+          agruras: new FormControl(
+            paciente.condicionActual?.problemasGastroIntestinales?.agruras
+          ),
+          distencionAbdominal: new FormControl(
+            paciente.condicionActual?.problemasGastroIntestinales?.distencionAbdominal
+          ),
+          otro: new FormControl(
+            paciente.condicionActual?.problemasGastroIntestinales?.distencionAbdominal
+          ),
+        }),
+      }),
     });
 
     this.cargando = false;
+    if (this.esRutaDetalle()) {
+      this.esDetalle = true;
+      this.protocoloDetalle();
+    }
   }
 
   f(campo: string) {
@@ -98,13 +184,19 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
   submit(modelo: Paciente, invalid) {
     this.formulario.markAllAsTouched();
     this.formulario.updateValueAndValidity();
-    if (invalid) return;
+
+    if (invalid) {
+      this.notiService.toast.error('Hay errores');
+      return;
+    }
 
     this.cargando = true;
-    (modelo._id
+
+    const operacion = modelo._id
       ? this.pacienteService.modificar(modelo)
-      : this.pacienteService.crear(modelo)
-    ).subscribe(
+      : this.pacienteService.crear(modelo);
+
+    operacion.subscribe(
       () => {
         this.location.back();
         this.cargando = false;
@@ -113,5 +205,14 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
         this.cargando = false;
       }
     );
+  }
+
+  modificar(paciente: Paciente) {
+    this.router.navigate([
+      '/modificar',
+      paciente._id,
+      'paciente',
+      paciente.nombre,
+    ]);
   }
 }

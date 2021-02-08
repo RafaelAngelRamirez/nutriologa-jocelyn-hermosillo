@@ -9,7 +9,7 @@ export interface Paciente {
 
   metasDelPaciente: string[];
 
-  condiciónActual: {
+  condicionActual: {
     embarazo: boolean;
     dm: boolean;
     ht: boolean;

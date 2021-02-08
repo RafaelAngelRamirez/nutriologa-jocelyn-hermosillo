@@ -1,15 +1,16 @@
-<div class="row">
+<div *ngIf="formulario" class="row mt-3 para-detalle">
   <div class="col-12">
     <div class="card shadow">
       <div class="card-body">
         <form [formGroup]="formulario">
           <div class="row">
+            <ng-container *ngIf="false; else botonGuardado"></ng-container>
             <!-- 
 =====================================
  nombre
 =====================================
 -->
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-lg-4">
               <div class="form-group">
                 <input
                   [ngClass]="{
@@ -23,7 +24,6 @@
                 <small id="helpId" class="form-text text-muted">Nombre</small>
                 <app-validacion-inputs
                   [campo]="f('nombre')"
-                  [directo]="true"
                 ></app-validacion-inputs>
               </div>
             </div>
@@ -38,7 +38,7 @@
  fechaDeNacimiento
 =====================================
 -->
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-lg-4">
               <div class="form-group">
                 <input
                   [ngClass]="{
@@ -50,8 +50,12 @@
                   formControlName="fechaDeNacimiento"
                 />
                 <small id="helpId" class="form-text text-muted"
-                  >Fecha de nacimiento</small
-                >
+                  >Fecha de nacimiento. Edad
+                  {{
+                    utilidadesService.calcularEdad(f("fechaDeNacimiento").value)
+                  }}
+                  años
+                </small>
                 <app-validacion-inputs
                   [campo]="f('fechaDeNacimiento')"
                 ></app-validacion-inputs>
@@ -68,7 +72,7 @@
  celular
 =====================================
 -->
-            <div class="col-6">
+            <div class="col-12 col-md-6 col-lg-4">
               <div class="form-group">
                 <input
                   [ngClass]="{
@@ -93,9 +97,43 @@
 
             <!-- 
 =====================================
+ sexo
+=====================================
+-->
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="form-group">
+                <select
+                  [ngClass]="{
+                    'is-invalid': vs.invalid(f('sexo')),
+                    'is-valid': vs.valid(f('sexo'))
+                  }"
+                  formControlName="sexo"
+                  class="form-control"
+                >
+                  <option [ngValue]="true" selected>Mujer</option>
+                  <option [ngValue]="false">Hombre</option>
+                </select>
+                <small id="helpId" class="form-text text-muted">Sexo</small>
+                <app-validacion-inputs
+                  [campo]="f('sexo')"
+                ></app-validacion-inputs>
+              </div>
+            </div>
+            <!-- 
+=====================================
+ END sexo
+=====================================
+-->
+
+            <!-- 
+=====================================
  Array metasDelPaciente 
 =====================================
 -->
+            <div class="col-12">
+              <hr />
+              <h3>Metas</h3>
+            </div>
             <ng-container formArrayName="metasDelPaciente">
               <ng-container
                 *ngFor="
@@ -109,8 +147,22 @@
      metasDelPaciente
     =====================================
     -->
-                  <div class="col-6">
+                  <div class="col-12">
                     <div class="form-group">
+                      <small
+                        id="helpId"
+                        class="form-text text-muted d-flex justify-content-between"
+                        >Meta #{{ i + 1 }}
+
+                        <a
+                          class="text-danger"
+                          href="javascript:void(0)"
+                          *ngIf="!esDetalle"
+                          (click)="fa('metasDelPaciente').removeAt(i)"
+                        >
+                          Eliminar meta
+                        </a>
+                      </small>
                       <input
                         [ngClass]="{
                           'is-invalid': vs.invalid(dummy),
@@ -120,9 +172,6 @@
                         class="form-control"
                         [formControl]="dummy"
                       />
-                      <small id="helpId" class="form-text text-muted">{{
-                        i
-                      }}</small>
                       <app-validacion-inputs
                         [campo]="dummy"
                         [directo]="true"
@@ -138,8 +187,9 @@
               </ng-container>
             </ng-container>
 
-            <div class="col-12">
+            <div class="col-12 mt-3">
               <a
+                *ngIf="!esDetalle"
                 (click)="agregarMeta()"
                 class="btn btn-primary"
                 href="javascript:void(0)"
@@ -152,18 +202,451 @@
  END Array metasDelPaciente 
 =====================================
 -->
-
             <div class="col-12">
               <hr />
-              <a
-                (click)="submit(formulario.value, formulario.valid)"
-                class="btn btn-primary"
-                href="javascript:void(0)"
-                role="button"
-              >
-                Guardar</a
-              >
+              <h3>Condicion actual</h3>
             </div>
+
+            <ng-container formGroupName="condicionActual">
+              <!-- 
+              =====================================
+               embarazo
+              =====================================
+              -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      formControlName="embarazo"
+                    />
+                    Embarazo
+                  </label>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END embarazo
+              =====================================
+              -->
+
+              <!-- 
+              =====================================
+               dm
+              =====================================
+              -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      formControlName="dm"
+                    />
+                    DM
+                  </label>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END dm
+              =====================================
+              -->
+
+              <!-- 
+              =====================================
+               ht
+              =====================================
+              -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      formControlName="ht"
+                    />
+                    HT
+                  </label>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END ht
+              =====================================
+              -->
+
+              <!-- 
+              =====================================
+               dl
+              =====================================
+              -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      formControlName="dl"
+                    />
+                    DL
+                  </label>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END dl
+              =====================================
+              -->
+
+              <!-- 
+              =====================================
+               au
+              =====================================
+              -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      formControlName="au"
+                    />
+                    AU
+                  </label>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END au
+              =====================================
+              -->
+
+              <!-- 
+              =====================================
+               ca
+              =====================================
+              -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      formControlName="ca"
+                    />
+                    CA
+                  </label>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END ca
+              =====================================
+              -->
+
+              <!-- 
+              =====================================
+               cv
+              =====================================
+              -->
+              <div class="col-12 col-md-6 col-lg-4">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      formControlName="cv"
+                    />
+                    CV
+                  </label>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END cv
+              =====================================
+              -->
+
+              <!-- 
+              =====================================
+               otra
+              =====================================
+              -->
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <input
+                    [ngClass]="{
+                      'is-invalid': vs.invalid(f('condicionActual.otra')),
+                      'is-valid': vs.valid(f('condicionActual.otra'))
+                    }"
+                    type="text"
+                    class="form-control"
+                    formControlName="otra"
+                  />
+                  <small id="helpId" class="form-text text-muted">Otra</small>
+                  <app-validacion-inputs
+                    [campo]="f('condicionActual.otra')"
+                  ></app-validacion-inputs>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END otra
+              =====================================
+              -->
+
+              <ng-container formGroupName="problemasGastroIntestinales">
+                <div class="col-12">
+                  <hr />
+                  <h3>Problemas Gastrointestinales</h3>
+                </div>
+
+                <!-- 
+                =====================================
+                 estrenimiento
+                =====================================
+                -->
+                <div class="col-6">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        formControlName="estrenimiento"
+                      />
+                      Estreñimiento
+                    </label>
+                  </div>
+                </div>
+                <!-- 
+                =====================================
+                 END estrenimiento
+                =====================================
+                -->
+
+                <!-- 
+                =====================================
+                 diarrea
+                =====================================
+                -->
+                <div class="col-6">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        formControlName="diarrea"
+                      />
+                      Diarrea
+                    </label>
+                  </div>
+                </div>
+                <!-- 
+                =====================================
+                 END diarrea
+                =====================================
+                -->
+
+                <!-- 
+                =====================================
+                 alergias
+                =====================================
+                -->
+                <div class="col-6">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        formControlName="alergias"
+                      />
+                      Alergias
+                    </label>
+                  </div>
+                </div>
+                <!-- 
+                =====================================
+                 END alergias
+                =====================================
+                -->
+
+                <!-- 
+                =====================================
+                 vomito
+                =====================================
+                -->
+                <div class="col-6">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        formControlName="vomito"
+                      />
+                      Vomito
+                    </label>
+                  </div>
+                </div>
+                <!-- 
+                =====================================
+                 END vomito
+                =====================================
+                -->
+
+                <!-- 
+                =====================================
+                 colitis
+                =====================================
+                -->
+                <div class="col-6">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        formControlName="colitis"
+                      />
+                      Colitis
+                    </label>
+                  </div>
+                </div>
+                <!-- 
+                =====================================
+                 END colitis
+                =====================================
+                -->
+
+                <!-- 
+                =====================================
+                 gastritis
+                =====================================
+                -->
+                <div class="col-6">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        formControlName="gastritis"
+                      />
+                      Gastritis
+                    </label>
+                  </div>
+                </div>
+                <!-- 
+                =====================================
+                 END gastritis
+                =====================================
+                -->
+
+                <!-- 
+                =====================================
+                 nauseas
+                =====================================
+                -->
+                <div class="col-6">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        formControlName="nauseas"
+                      />
+                      Nauseas
+                    </label>
+                  </div>
+                </div>
+                <!-- 
+                =====================================
+                 END nauseas
+                =====================================
+                -->
+
+                <!-- 
+                =====================================
+                 agruras
+                =====================================
+                -->
+                <div class="col-6">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        formControlName="agruras"
+                      />
+                      Agruras
+                    </label>
+                  </div>
+                </div>
+                <!-- 
+                =====================================
+                 END agruras
+                =====================================
+                -->
+
+                <!-- 
+                =====================================
+                 distencionAbdominal
+                =====================================
+                -->
+                <div class="col-6">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        formControlName="distencionAbdominal"
+                      />
+                      Distención abdominal
+                    </label>
+                  </div>
+                </div>
+                <!-- 
+                =====================================
+                 END distencionAbdominal
+                =====================================
+                -->
+
+                <!-- 
+                =====================================
+                 otro
+                =====================================
+                -->
+                <div class="col-6">
+                  <div class="form-group">
+                    <input
+                      [ngClass]="{
+                        'is-invalid': vs.invalid(
+                          f('condicionActual.problemasGastroIntestinales.otro')
+                        ),
+                        'is-valid': vs.valid(
+                          f('condicionActual.problemasGastroIntestinales.otro')
+                        )
+                      }"
+                      type="text"
+                      class="form-control"
+                      formControlName="otro"
+                    />
+                    <small id="helpId" class="form-text text-muted">Otro</small>
+                    <app-validacion-inputs
+                      [campo]="
+                        f('condicionActual.problemasGastroIntestinales.otro')
+                      "
+                    ></app-validacion-inputs>
+                  </div>
+                </div>
+                <!-- 
+                =====================================
+                 END otro
+                =====================================
+                -->
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="false; else botonGuardado"></ng-container>
           </div>
         </form>
       </div>
@@ -171,4 +654,22 @@
   </div>
 </div>
 
-<pre>{{ this.formulario.value | json }}</pre>
+<ng-template #botonGuardado>
+  <div *ngIf="!esDetalle" class="col-12">
+    <hr />
+    <a
+      (click)="submit(formulario?.value, formulario.invalid)"
+      class="btn btn-success"
+      href="javascript:void(0)"
+      role="button"
+    >
+      Guardar</a
+    >
+  </div>
+  <div *ngIf="esDetalle" class="col-12">
+    <hr />
+    <a class="btn btn-primary" role="button" (click)="modificar(paciente)">
+      Editar
+    </a>
+  </div>
+</ng-template>
