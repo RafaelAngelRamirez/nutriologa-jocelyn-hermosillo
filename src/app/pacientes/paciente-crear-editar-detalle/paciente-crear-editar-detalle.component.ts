@@ -72,7 +72,6 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
 
   esRutaDetalle() {
     let url = this.activatedRoute.snapshot['_routerState'].url;
-    console.log(url);
     return url.includes('detalle');
   }
 
@@ -175,13 +174,12 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
   }
 
   formatearFecha(date: Date) {
-    let fecha = date ?? new Date();
-    return this.date.transform(fecha, 'yyyy-MM-dd');
+    return this.utilidadesService.formatearFecha(date);
   }
   agregarMeta() {
     this.fa('metasDelPaciente').push(new FormControl());
   }
-  submit(modelo: Paciente, invalid) {
+  submit(modelo: any, invalid) {
     this.formulario.markAllAsTouched();
     this.formulario.updateValueAndValidity();
 
