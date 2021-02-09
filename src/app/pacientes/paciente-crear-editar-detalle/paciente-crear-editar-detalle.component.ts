@@ -58,15 +58,20 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
       this.renderer.setStyle(x, 'border-color', '#ccc');
     };
     setTimeout(() => {
+
+      const contenedor = document.getElementById(
+        "formularioDetalle"
+      )
+
       // Agregamos una clase a todos los input.
-      document
+      contenedor
         .querySelectorAll<HTMLInputElement>('input')
         .forEach(callbackEstilos);
-      document
+      contenedor
         .querySelectorAll<HTMLSelectElement>('select')
         .forEach(callbackEstilos);
 
-      document
+      contenedor
         .querySelectorAll<HTMLSelectElement>("input[type='checkbox']")
         .forEach((x) => {
           this.renderer.setAttribute(x, 'disabled', 'true');
