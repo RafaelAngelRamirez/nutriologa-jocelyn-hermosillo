@@ -58,10 +58,7 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
       this.renderer.setStyle(x, 'border-color', '#ccc');
     };
     setTimeout(() => {
-
-      const contenedor = document.getElementById(
-        "formularioDetalle"
-      )
+      const contenedor = document.getElementById('formularioDetalle');
 
       // Agregamos una clase a todos los input.
       contenedor
@@ -125,6 +122,11 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
 
       condicionActual: new FormGroup({
         embarazo: new FormControl(paciente.condicionActual?.embarazo),
+        ultimaMenstruacion: new FormControl(
+          paciente?.condicionActual?.ultimaMenstruacion
+            ? this.formatearFecha(paciente?.condicionActual?.ultimaMenstruacion)
+            : ''
+        ),
         dm: new FormControl(paciente.condicionActual?.dm),
         ht: new FormControl(paciente.condicionActual?.ht),
         dl: new FormControl(paciente.condicionActual?.dl),
@@ -172,6 +174,7 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
       this.esDetalle = true;
       this.protocoloDetalle();
     }
+    this.modalService.open(this.IdAntropometricos);
   }
 
   f(campo: string) {

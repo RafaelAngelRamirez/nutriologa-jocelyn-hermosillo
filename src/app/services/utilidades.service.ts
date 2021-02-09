@@ -22,7 +22,8 @@ export class UtilidadesService {
   formatearFecha(date: Date) {
     // Tenemos que eliminar la z del string para que no
     // nos convierta la fecha
-    let limpio = date.toString().split('');
+    
+    let limpio = date?.toString().split('');
     // Es la ultima posición
     limpio.pop();
 

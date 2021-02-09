@@ -11,6 +11,7 @@ export interface Paciente {
 
   condicionActual: {
     embarazo: boolean;
+    ultimaMenstruacion: Date;
     dm: boolean;
     ht: boolean;
     dl: boolean;

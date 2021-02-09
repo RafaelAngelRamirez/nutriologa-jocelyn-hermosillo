@@ -1,0 +1,343 @@
+<div class="row">
+  <div class="col-12">
+    <h1>Antropométrico</h1>
+    <hr />
+    <div *ngIf="formulario" class="form" [formGroup]="formulario">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6">
+              <h6>IMC:</h6>
+              {{ imc(f("peso").value, f("talla").value) | number: "0.2-2" }}
+            </div>
+            <div class="col-6">
+              <h6>DXIMC:</h6>
+
+              <span
+                [class]="
+                  'bg-' +
+                  claveColorDiagnostico[
+                    imcDiagnostico(imc(f('peso').value, f('talla').value))
+                  ] +
+                  ' text-white'
+                "
+              >
+                {{ imcDiagnostico(imc(f("peso").value, f("talla").value)) }}
+              </span>
+            </div>
+            <div class="col-6">
+              <h6>KG de grasa:</h6>
+              {{
+                kgGrasa(f("peso").value, f("porcentajeDeGrasa").value)
+                  | number: "0.2-2"
+              }}
+              kg
+            </div>
+            <div class="col-6">
+              <h6>Peso teórico:</h6>
+              {{
+                pesoTeorico(
+                  f("talla").value,
+                  paciente?.fechaDeNacimiento,
+                  paciente?.sexo
+                ) | number: "0.2-2"
+              }}
+              kg
+            </div>
+            <div class="col-6">
+              <h6>GER:</h6>
+              {{
+                gastoEnergeticoReposo(
+                  f("peso").value,
+                  f("talla").value,
+                  paciente?.fechaDeNacimiento,
+                  paciente?.sexo
+                ) | number: "0.0"
+              }}
+
+              <span *ngIf="paciente?.condicionActual?.embarazo">
+                +
+
+                {{
+                  obtenerCaloriasTrimestre(
+                    paciente.condicionActual.ultimaMenstruacion
+                  )
+                }}
+
+                cal (embarazo,
+                {{
+                  obtenerTrimestre(paciente.condicionActual.ultimaMenstruacion)
+                }}
+                trimestre, semana
+                {{
+                  obtenerSemanas(paciente.condicionActual.ultimaMenstruacion)
+                }}) =
+                {{
+                  gastoEnergeticoReposo(
+                    f("peso").value,
+                    f("talla").value,
+                    paciente?.fechaDeNacimiento,
+                    paciente?.sexo
+                  ) +
+                    obtenerCaloriasTrimestre(
+                      paciente.condicionActual.ultimaMenstruacion
+                    ) | number: "0.0"
+                }}
+              </span>
+              cal
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 
+=====================================
+ peso
+=====================================
+-->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('peso')),
+                'is-valid': vs.valid(f('peso'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="peso"
+              mask="separator.2"
+              suffix=" kg"
+            />
+            <small id="helpId" class="form-text text-muted">Peso</small>
+            <app-validacion-inputs [campo]="f('peso')"></app-validacion-inputs>
+          </div>
+        </div>
+        <!-- 
+=====================================
+END peso
+=====================================
+-->
+
+        <!-- 
+=====================================
+ talla
+=====================================
+-->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('talla')),
+                'is-valid': vs.valid(f('talla'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="talla"
+              mask="separator.2"
+              suffix=" m"
+            />
+            <small id="helpId" class="form-text text-muted">Talla</small>
+            <app-validacion-inputs [campo]="f('talla')"></app-validacion-inputs>
+          </div>
+        </div>
+        <!-- 
+=====================================
+ END talla
+=====================================
+-->
+
+        <!-- 
+=====================================
+ circunferenciaCintura
+=====================================
+-->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('circunferenciaCintura')),
+                'is-valid': vs.valid(f('circunferenciaCintura'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="circunferenciaCintura"
+              mask="separator.2"
+              suffix=" cm"
+            />
+            <small id="helpId" class="form-text text-muted"
+              >Circunferencia cintura</small
+            >
+            <app-validacion-inputs
+              [campo]="f('circunferenciaCintura')"
+            ></app-validacion-inputs>
+          </div>
+        </div>
+        <!-- 
+=====================================
+ END circunferenciaCintura
+=====================================
+-->
+
+        <!-- 
+=====================================
+ circunferenciaAbdomen
+=====================================
+-->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('circunferenciaAbdomen')),
+                'is-valid': vs.valid(f('circunferenciaAbdomen'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="circunferenciaAbdomen"
+              mask="separator.2"
+              suffix=" cm"
+            />
+            <small id="helpId" class="form-text text-muted"
+              >Circunferencia abdomen</small
+            >
+            <app-validacion-inputs
+              [campo]="f('circunferenciaAbdomen')"
+            ></app-validacion-inputs>
+          </div>
+        </div>
+        <!-- 
+=====================================
+ END circunferenciaAbdomen
+=====================================
+-->
+
+        <!-- 
+=====================================
+ circunferenciaCadera
+=====================================
+-->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('circunferenciaCadera')),
+                'is-valid': vs.valid(f('circunferenciaCadera'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="circunferenciaCadera"
+              mask="separator.2"
+              suffix=" cm"
+            />
+            <small id="helpId" class="form-text text-muted"
+              >Circunferencia cadera</small
+            >
+            <app-validacion-inputs
+              [campo]="f('circunferenciaCadera')"
+            ></app-validacion-inputs>
+          </div>
+        </div>
+        <!-- 
+=====================================
+ END circunferenciaCadera
+=====================================
+-->
+
+        <!-- 
+=====================================
+ masaMuscular
+=====================================
+-->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('masaMuscular')),
+                'is-valid': vs.valid(f('masaMuscular'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="masaMuscular"
+              mask="separator.2"
+              suffix=" kg"
+            />
+            <small id="helpId" class="form-text text-muted"
+              >Masa muscular</small
+            >
+            <app-validacion-inputs
+              [campo]="f('masaMuscular')"
+            ></app-validacion-inputs>
+          </div>
+        </div>
+        <!-- 
+=====================================
+ END masaMuscular
+=====================================
+-->
+
+        <!-- 
+=====================================
+ porcentajeDeGrasa
+=====================================
+-->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('porcentajeDeGrasa')),
+                'is-valid': vs.valid(f('porcentajeDeGrasa'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="porcentajeDeGrasa"
+              mask="separator.2"
+              suffix=" %"
+            />
+            <small id="helpId" class="form-text text-muted"
+              >Porcentaje de grasa</small
+            >
+            <app-validacion-inputs
+              [campo]="f('porcentajeDeGrasa')"
+            ></app-validacion-inputs>
+          </div>
+        </div>
+        <!-- 
+=====================================
+ END porcentajeDeGrasa
+=====================================
+-->
+
+        <!-- 
+=====================================
+ porcentajeDeAgua
+=====================================
+-->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('porcentajeDeAgua')),
+                'is-valid': vs.valid(f('porcentajeDeAgua'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="porcentajeDeAgua"
+              mask="separator.2"
+              suffix=" %"
+            />
+            <small id="helpId" class="form-text text-muted"
+              >Porcentaje de agua</small
+            >
+            <app-validacion-inputs
+              [campo]="f('porcentajeDeAgua')"
+            ></app-validacion-inputs>
+          </div>
+        </div>
+        <!-- 
+=====================================
+ END porcentajeDeAgua
+=====================================
+-->
+      </div>
+    </div>
+  </div>
+</div>

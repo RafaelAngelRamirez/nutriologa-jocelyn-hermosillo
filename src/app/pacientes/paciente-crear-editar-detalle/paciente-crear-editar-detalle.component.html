@@ -234,6 +234,39 @@
 
               <!-- 
               =====================================
+               ultimaMesntruacion
+              =====================================
+              -->
+              <div 
+              
+              *ngIf="f('condicionActual.embarazo').value"
+              class="col-12 col-md-6">
+                <div class="form-group">
+                  <input
+                    [ngClass]="{
+                      'is-invalid': vs.invalid(f('condicionActual.ultimaMenstruacion')),
+                      'is-valid': vs.valid(f('condicionActual.ultimaMenstruacion'))
+                    }"
+                    type="date"
+                    class="form-control"
+                    formControlName="ultimaMenstruacion"
+                  />
+                  <small id="helpId" class="form-text text-muted"
+                    >Última mestruación</small
+                  >
+                  <app-validacion-inputs
+                    [campo]="f('condicionActual.ultimaMenstruacion')"
+                  ></app-validacion-inputs>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END ultimaMesntruacion
+              =====================================
+              -->
+
+              <!-- 
+              =====================================
                dm
               =====================================
               -->
@@ -690,5 +723,8 @@
 </ng-template>
 
 <codice-modal [id]="IdAntropometricos">
-  <h1>Funciona</h1>
+  <app-paciente-antropometrico
+    [datos]="[{}, paciente]"
+    (guardado)="this.crearFormulario($event)"
+  ></app-paciente-antropometrico>
 </codice-modal>

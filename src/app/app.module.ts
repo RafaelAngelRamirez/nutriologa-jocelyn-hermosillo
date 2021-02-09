@@ -19,6 +19,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ModalModule } from '@codice-progressio/modal';
+import { PacienteAntropometricoComponent } from './pacientes/paciente-antropometrico/paciente-antropometrico.component';
+
+import {NgxMaskModule} from 'ngx-mask'
 
 const appRoutes: Routes = [
   { path: 'pacientes', component: PacientesListaComponent },
@@ -42,6 +45,7 @@ const appRoutes: Routes = [
     PacientesListaComponent,
     PacienteCrearEditarDetalleComponent,
     ValidacionInputComponent,
+    PacienteAntropometricoComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +54,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     ReactiveFormsModule,
     ComponentsModule,
+    NgxMaskModule.forRoot(),
     HttpClientModule,
     ToastrModule.forRoot({
       timeOut: 10000,
