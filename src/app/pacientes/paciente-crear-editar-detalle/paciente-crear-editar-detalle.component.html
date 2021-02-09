@@ -56,6 +56,7 @@
                   }}
                   años
                 </small>
+
                 <app-validacion-inputs
                   [campo]="f('fechaDeNacimiento')"
                 ></app-validacion-inputs>
@@ -663,13 +664,31 @@
       href="javascript:void(0)"
       role="button"
     >
+      <i class="fas fa-save"></i>
+
       Guardar</a
     >
   </div>
+
   <div *ngIf="esDetalle" class="col-12">
     <hr />
-    <a class="btn btn-primary" role="button" (click)="modificar(paciente)">
-      Editar
+
+    <a class="btn btn-warning mr-1" role="button" (click)="modificar(paciente)">
+      <i class="fas fa-edit    "></i> Editar
     </a>
+ 
+    <a
+      class="btn btn-primary ml-md-5"
+      role="button"
+      (click)="modalService.open(IdAntropometricos)"
+    >
+      <i class="fas fa-weight"></i>
+    </a>
+    <br>
+    <br>
   </div>
 </ng-template>
+
+<codice-modal [id]="IdAntropometricos">
+  <h1>Funciona</h1>
+</codice-modal>

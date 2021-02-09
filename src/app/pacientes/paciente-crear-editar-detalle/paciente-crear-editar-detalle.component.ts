@@ -7,6 +7,7 @@ import { ValidacionesService } from '../../services/validaciones.service';
 import { DatePipe, Location } from '@angular/common';
 import { ManejoDeMensajesService } from '../../services/manejo-de-mensajes.service';
 import { UtilidadesService } from '../../services/utilidades.service';
+import { ModalService } from '@codice-progressio/modal';
 
 @Component({
   selector: 'app-paciente-crear-editar-detalle',
@@ -15,6 +16,7 @@ import { UtilidadesService } from '../../services/utilidades.service';
 })
 export class PacienteCrearEditarDetalleComponent implements OnInit {
   constructor(
+    public modalService: ModalService,
     public utilidadesService: UtilidadesService,
     private renderer: Renderer2,
     private location: Location,
@@ -25,6 +27,8 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
     private date: DatePipe,
     private notiService: ManejoDeMensajesService
   ) {}
+
+  IdAntropometricos = 'AABBDCDASDF';
   private _cargando = false;
   public get cargando() {
     return this._cargando;

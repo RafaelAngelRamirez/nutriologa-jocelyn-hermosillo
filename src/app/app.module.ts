@@ -18,6 +18,7 @@ import { DatePipe } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { ModalModule } from '@codice-progressio/modal';
 
 const appRoutes: Routes = [
   { path: 'pacientes', component: PacientesListaComponent },
@@ -57,6 +58,7 @@ const appRoutes: Routes = [
       progressBar: true,
       progressAnimation: 'increasing',
     }),
+    ModalModule,
   ],
   providers: [
     DatePipe,
