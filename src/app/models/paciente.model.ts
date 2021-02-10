@@ -62,6 +62,7 @@ export interface Paciente {
 }
 
 export interface DatosAntropometricos {
+  compensacion: number;
   peso: number;
   // talla es la estatura
   talla: number;

@@ -8,7 +8,7 @@
           <div class="row">
             <div class="col-6">
               <h6>IMC:</h6>
-              {{ imc(f("peso").value, f("talla").value) | number: "0.2-2" }}
+              {{ imc() | number: "0.2-2" }}
             </div>
             <div class="col-6">
               <h6>DXIMC:</h6>
@@ -16,79 +16,90 @@
               <span
                 [class]="
                   'bg-' +
-                  claveColorDiagnostico[
-                    imcDiagnostico(imc(f('peso').value, f('talla').value))
-                  ] +
+                  claveColorDiagnostico[imcDiagnostico()] +
                   ' text-white'
                 "
               >
-                {{ imcDiagnostico(imc(f("peso").value, f("talla").value)) }}
+                {{ imcDiagnostico() }}
               </span>
             </div>
             <div class="col-6">
               <h6>KG de grasa:</h6>
-              {{
-                kgGrasa(f("peso").value, f("porcentajeDeGrasa").value)
-                  | number: "0.2-2"
-              }}
+              {{ kgGrasa() | number: "0.2-2" }}
               kg
             </div>
             <div class="col-6">
               <h6>Peso teórico:</h6>
-              {{
-                pesoTeorico(
-                  f("talla").value,
-                  paciente?.fechaDeNacimiento,
-                  paciente?.sexo
-                ) | number: "0.2-2"
-              }}
+              {{ pesoTeorico() | number: "0.2-2" }}
+              kg
+            </div>
+            <div class="col-6">
+              <h6>Peso mínimo:</h6>
+              {{ pesoMinimo() | number: "0.2-2" }}
+              kg
+            </div>
+            <div class="col-6">
+              <h6>Peso máximo:</h6>
+              {{ pesoMaximo() | number: "0.2-2" }}
               kg
             </div>
             <div class="col-6">
               <h6>GER:</h6>
-              {{
-                gastoEnergeticoReposo(
-                  f("peso").value,
-                  f("talla").value,
-                  paciente?.fechaDeNacimiento,
-                  paciente?.sexo
-                ) | number: "0.0"
-              }}
+              {{ gastoEnergeticoReposo() | number: "0.0" }}
 
               <span *ngIf="paciente?.condicionActual?.embarazo">
                 +
 
-                {{
-                  obtenerCaloriasTrimestre(
-                    paciente.condicionActual.ultimaMenstruacion
-                  )
-                }}
+                {{ obtenerCaloriasTrimestre() }}
 
                 cal (embarazo,
-                {{
-                  obtenerTrimestre(paciente.condicionActual.ultimaMenstruacion)
-                }}
+                {{ obtenerTrimestre() }}
                 trimestre, semana
+                {{ obtenerSemanas() }}) =
                 {{
-                  obtenerSemanas(paciente.condicionActual.ultimaMenstruacion)
-                }}) =
-                {{
-                  gastoEnergeticoReposo(
-                    f("peso").value,
-                    f("talla").value,
-                    paciente?.fechaDeNacimiento,
-                    paciente?.sexo
-                  ) +
-                    obtenerCaloriasTrimestre(
-                      paciente.condicionActual.ultimaMenstruacion
-                    ) | number: "0.0"
+                  gastoEnergeticoReposo() + obtenerCaloriasTrimestre()
+                    | number: "0.0"
                 }}
               </span>
               cal
-            </div>
 
+              <span *ngIf="f('compensacion').value">
+                [ COMPESACIÓN {{ f("compensacion").value }} %] =
+                {{ calculoCompesancion() }}
+              </span>
+            </div>
           </div>
         </div>
+
+        <!-- 
+        =====================================
+         compensacion
+        =====================================
+        -->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('compensacion')),
+                'is-valid': vs.valid(f('compensacion'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="compensacion"
+              mask="separator.2"
+              suffix=" %"
+            />
+            <small id="helpId" class="form-text text-muted">Compensación</small>
+            <app-validacion-inputs
+              [campo]="f('compensacion')"
+            ></app-validacion-inputs>
+          </div>
+        </div>
+        <!-- 
+        =====================================
+         END compensacion
+        =====================================
+        -->
 
         <!-- 
 =====================================
