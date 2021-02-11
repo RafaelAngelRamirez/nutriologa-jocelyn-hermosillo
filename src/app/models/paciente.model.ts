@@ -41,24 +41,19 @@ export interface Paciente {
   };
 
   habitosAlimentarios: {
-    r24h: {
-      desayuno: string[];
-      colacionM: string[];
-      comida: string[];
-      colacionV: string[];
-      cena: string[];
-    };
-
-    tiemposDeComida: {
-      desayuno: string[];
-      colacionM: string[];
-      comida: string[];
-      colacionV: string[];
-      cena: string[];
-    };
+    r24h: TiemposDeHabitos;
+    tiemposDeComida: TiemposDeHabitos;
   };
 
   datosAntropometricos: DatosAntropometricos[];
+}
+
+export interface TiemposDeHabitos {
+  desayuno: string[];
+  colacionM: string[];
+  comida: string[];
+  colacionV: string[];
+  cena: string[];
 }
 
 export interface DatosAntropometricos {

@@ -1,8 +1,14 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChildren,
+} from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PacienteService } from '../../services/paciente.service';
-import { Paciente } from '../../models/paciente.model';
+import { Paciente, TiemposDeHabitos } from '../../models/paciente.model';
 import { ValidacionesService } from '../../services/validaciones.service';
 import { DatePipe, Location } from '@angular/common';
 import { ManejoDeMensajesService } from '../../services/manejo-de-mensajes.service';
@@ -115,9 +121,7 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
       sexo: new FormControl(paciente.sexo, [Validators.required]),
       celular: new FormControl(paciente.celular, [Validators.required]),
       metasDelPaciente: new FormArray(
-        paciente.metasDelPaciente?.map((x) => new FormControl(x)) ?? [
-          new FormControl(),
-        ]
+        paciente.metasDelPaciente?.map(this.cbArray) ?? [new FormControl()]
       ),
 
       condicionActual: new FormGroup({
@@ -167,6 +171,21 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
           ),
         }),
       }),
+      actividadFisica: new FormGroup({
+        tipo: new FormControl(paciente.actividadFisica?.tipo),
+        frecuenciaSemana: new FormControl(
+          paciente.actividadFisica?.frecuenciaSemana
+        ),
+        tiempoMinutos: new FormControl(paciente.actividadFisica?.tiempoMinutos),
+        intensidad: new FormControl(paciente.actividadFisica?.intensidad),
+      }),
+
+      habitosAlimentarios: new FormGroup({
+        r24h: this.crearHabitos(paciente.habitosAlimentarios?.r24h),
+        tiemposDeComida: this.crearHabitos(
+          paciente.habitosAlimentarios?.tiemposDeComida
+        ),
+      }),
     });
 
     this.cargando = false;
@@ -174,15 +193,33 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
       this.esDetalle = true;
       this.protocoloDetalle();
     }
-    this.modalService.open(this.IdAntropometricos);
   }
 
+  crearHabitos(objeto: TiemposDeHabitos) {
+    return new FormGroup({
+      desayuno: new FormArray(this.popularArray(objeto.desayuno)),
+      colacionM: new FormArray(this.popularArray(objeto.colacionM)),
+      comida: new FormArray(this.popularArray(objeto.comida)),
+      colacionV: new FormArray(this.popularArray(objeto.colacionV)),
+      cena: new FormArray(this.popularArray(objeto.cena)),
+    });
+  }
+
+  popularArray(arreglo: string[]) {
+    if (arreglo?.length === 0) return [new FormControl()];
+    return arreglo.map(this.cbArray);
+  }
+
+  cbArray = (x) => new FormControl();
   f(campo: string) {
     return this.formulario.get(campo);
   }
 
   fa(campo: string) {
     return this.f(campo) as FormArray;
+  }
+  fg(campo: string) {
+    return this.f(campo) as FormGroup;
   }
 
   formatearFecha(date: Date) {
@@ -224,5 +261,20 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
       'paciente',
       paciente.nombre,
     ]);
+  }
+
+  agregarControl(arreglo: FormArray) {
+    arreglo.push(new FormControl());
+  }
+
+  eliminarControl(control: FormControl, i: number, formArray: FormArray) {
+    
+    
+    console.log(control.value)
+    
+    if (control?.value?.length === 0) {
+      formArray.removeAt(i);
+      return;
+    }
   }
 }

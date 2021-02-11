@@ -43,8 +43,6 @@ export class CalculosNutricionService {
 
   imcDiagnostico(imc: number) {
     if (imc < 18.5) return 'BP';
-
-    console.log(18.5 >= imc, imc < 25);
     if (imc >= 18.5 && imc < 25) return 'NP';
     if (imc >= 25 && imc < 30) return 'SP';
     if (imc >= 30 && imc < 35) return 'OB1';

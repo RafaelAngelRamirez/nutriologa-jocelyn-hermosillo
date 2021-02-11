@@ -21,7 +21,7 @@
                   class="form-control"
                   formControlName="nombre"
                 />
-                <small id="helpId" class="form-text text-muted">Nombre</small>
+                <small class="form-text text-muted">Nombre</small>
                 <app-validacion-inputs
                   [campo]="f('nombre')"
                 ></app-validacion-inputs>
@@ -49,7 +49,7 @@
                   class="form-control"
                   formControlName="fechaDeNacimiento"
                 />
-                <small id="helpId" class="form-text text-muted"
+                <small class="form-text text-muted"
                   >Fecha de nacimiento. Edad
                   {{
                     utilidadesService.calcularEdad(f("fechaDeNacimiento").value)
@@ -84,7 +84,7 @@
                   class="form-control"
                   formControlName="celular"
                 />
-                <small id="helpId" class="form-text text-muted">Celular</small>
+                <small class="form-text text-muted">Celular</small>
                 <app-validacion-inputs
                   [campo]="f('celular')"
                 ></app-validacion-inputs>
@@ -114,7 +114,7 @@
                   <option [ngValue]="true" selected>Mujer</option>
                   <option [ngValue]="false">Hombre</option>
                 </select>
-                <small id="helpId" class="form-text text-muted">Sexo</small>
+                <small class="form-text text-muted">Sexo</small>
                 <app-validacion-inputs
                   [campo]="f('sexo')"
                 ></app-validacion-inputs>
@@ -151,7 +151,6 @@
                   <div class="col-12">
                     <div class="form-group">
                       <small
-                        id="helpId"
                         class="form-text text-muted d-flex justify-content-between"
                         >Meta #{{ i + 1 }}
 
@@ -237,23 +236,25 @@
                ultimaMesntruacion
               =====================================
               -->
-              <div 
-              
-              *ngIf="f('condicionActual.embarazo').value"
-              class="col-12 col-md-6">
+              <div
+                *ngIf="f('condicionActual.embarazo').value"
+                class="col-12 col-md-6"
+              >
                 <div class="form-group">
                   <input
                     [ngClass]="{
-                      'is-invalid': vs.invalid(f('condicionActual.ultimaMenstruacion')),
-                      'is-valid': vs.valid(f('condicionActual.ultimaMenstruacion'))
+                      'is-invalid': vs.invalid(
+                        f('condicionActual.ultimaMenstruacion')
+                      ),
+                      'is-valid': vs.valid(
+                        f('condicionActual.ultimaMenstruacion')
+                      )
                     }"
                     type="date"
                     class="form-control"
                     formControlName="ultimaMenstruacion"
                   />
-                  <small id="helpId" class="form-text text-muted"
-                    >Última mestruación</small
-                  >
+                  <small class="form-text text-muted">Última mestruación</small>
                   <app-validacion-inputs
                     [campo]="f('condicionActual.ultimaMenstruacion')"
                   ></app-validacion-inputs>
@@ -419,7 +420,7 @@
                     class="form-control"
                     formControlName="otra"
                   />
-                  <small id="helpId" class="form-text text-muted">Otra</small>
+                  <small class="form-text text-muted">Otra</small>
                   <app-validacion-inputs
                     [campo]="f('condicionActual.otra')"
                   ></app-validacion-inputs>
@@ -442,7 +443,7 @@
                  estrenimiento
                 =====================================
                 -->
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-check">
                     <label class="form-check-label">
                       <input
@@ -465,7 +466,7 @@
                  diarrea
                 =====================================
                 -->
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-check">
                     <label class="form-check-label">
                       <input
@@ -488,7 +489,7 @@
                  alergias
                 =====================================
                 -->
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-check">
                     <label class="form-check-label">
                       <input
@@ -511,7 +512,7 @@
                  vomito
                 =====================================
                 -->
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-check">
                     <label class="form-check-label">
                       <input
@@ -534,7 +535,7 @@
                  colitis
                 =====================================
                 -->
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-check">
                     <label class="form-check-label">
                       <input
@@ -557,7 +558,7 @@
                  gastritis
                 =====================================
                 -->
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-check">
                     <label class="form-check-label">
                       <input
@@ -580,7 +581,7 @@
                  nauseas
                 =====================================
                 -->
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-check">
                     <label class="form-check-label">
                       <input
@@ -603,7 +604,7 @@
                  agruras
                 =====================================
                 -->
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-check">
                     <label class="form-check-label">
                       <input
@@ -626,7 +627,7 @@
                  distencionAbdominal
                 =====================================
                 -->
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-check">
                     <label class="form-check-label">
                       <input
@@ -649,7 +650,7 @@
                  otro
                 =====================================
                 -->
-                <div class="col-6">
+                <div class="col-12">
                   <div class="form-group">
                     <input
                       [ngClass]="{
@@ -664,7 +665,7 @@
                       class="form-control"
                       formControlName="otro"
                     />
-                    <small id="helpId" class="form-text text-muted">Otro</small>
+                    <small class="form-text text-muted">Otro</small>
                     <app-validacion-inputs
                       [campo]="
                         f('condicionActual.problemasGastroIntestinales.otro')
@@ -677,6 +678,166 @@
                  END otro
                 =====================================
                 -->
+              </ng-container>
+            </ng-container>
+
+            <div class="col-12">
+              <hr />
+              <h3>Actividad física</h3>
+            </div>
+            <ng-container formGroupName="actividadFisica">
+              <!-- 
+              =====================================
+               tipo
+              =====================================
+              -->
+              <div class="col-12 col-sm-3">
+                <div class="form-group">
+                  <input
+                    [ngClass]="{
+                      'is-invalid': vs.invalid(f('actividadFisica.tipo')),
+                      'is-valid': vs.valid(f('actividadFisica.tipo'))
+                    }"
+                    type="text"
+                    class="form-control"
+                    formControlName="tipo"
+                  />
+                  <small class="form-text text-muted">Tipo</small>
+                  <app-validacion-inputs
+                    [campo]="f('actividadFisica.tipo')"
+                    [directo]="true"
+                  ></app-validacion-inputs>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END tipo
+              =====================================
+              -->
+
+              <!-- 
+              =====================================
+               frecuenciaSemana
+              =====================================
+              -->
+              <div class="col-12 col-sm-3">
+                <div class="form-group">
+                  <input
+                    [ngClass]="{
+                      'is-invalid': vs.invalid(
+                        f('actividadFisica.frecuenciaSemana')
+                      ),
+                      'is-valid': vs.valid(
+                        f('actividadFisica.frecuenciaSemana')
+                      )
+                    }"
+                    type="text"
+                    class="form-control"
+                    formControlName="frecuenciaSemana"
+                  />
+                  <small class="form-text text-muted">Frecuencia semana</small>
+                  <app-validacion-inputs
+                    [campo]="f('actividadFisica.frecuenciaSemana')"
+                  ></app-validacion-inputs>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END frecuenciaSemana
+              =====================================
+              -->
+
+              <!-- 
+              =====================================
+               tiempoMinutos
+              =====================================
+              -->
+              <div class="col-12 col-sm-3">
+                <div class="form-group">
+                  <input
+                    [ngClass]="{
+                      'is-invalid': vs.invalid(
+                        f('actividadFisica.tiempoMinutos')
+                      ),
+                      'is-valid': vs.valid(f('actividadFisica.tiempoMinutos'))
+                    }"
+                    type="text"
+                    class="form-control"
+                    formControlName="tiempoMinutos"
+                  />
+                  <small class="form-text text-muted">Tiempo minutos</small>
+                  <app-validacion-inputs
+                    [campo]="f('actividadFisica.tiempoMinutos')"
+                  ></app-validacion-inputs>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END tiempoMinutos
+              =====================================
+              -->
+
+              <!-- 
+              =====================================
+               intensidad
+              =====================================
+              -->
+              <div class="col-12 col-sm-3">
+                <div class="form-group">
+                  <input
+                    [ngClass]="{
+                      'is-invalid': vs.invalid(f('actividadFisica.intensidad')),
+                      'is-valid': vs.valid(f('actividadFisica.intensidad'))
+                    }"
+                    type="text"
+                    class="form-control"
+                    formControlName="intensidad"
+                  />
+                  <small class="form-text text-muted">Intensidad</small>
+                  <app-validacion-inputs
+                    [campo]="f('actividadFisica.intensidad')"
+                  ></app-validacion-inputs>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END intensidad
+              =====================================
+              -->
+            </ng-container>
+
+            <div class="col-12">
+              <hr />
+              <h3>Habitos Alimentarios</h3>
+            </div>
+            <ng-container formGroupName="habitosAlimentarios">
+              <ng-container formGroupName="r24h">
+                <div class="col-12">
+                  <hr />
+                  <h4>Recordatorio 24 horas</h4>
+                </div>
+                <div class="col-12">
+                  <ng-container
+                    [ngTemplateOutlet]="habitosAlimentarios"
+                    [ngTemplateOutletContext]="{
+                      objeto: fg('habitosAlimentarios.r24h')
+                    }"
+                  ></ng-container>
+                </div>
+              </ng-container>
+              <ng-container formGroupName="tiemposDeComida">
+                <div class="col-12">
+                  <hr />
+                  <h4>Tiempos de comida</h4>
+                </div>
+                <div class="col-12">
+                  <ng-container
+                    [ngTemplateOutlet]="habitosAlimentarios"
+                    [ngTemplateOutletContext]="{
+                      objeto: fg('habitosAlimentarios.tiemposDeComida')
+                    }"
+                  ></ng-container>
+                </div>
               </ng-container>
             </ng-container>
 
@@ -720,6 +881,310 @@
     <br />
     <br />
   </div>
+</ng-template>
+
+<ng-template #habitosAlimentarios let-objeto="objeto">
+  <!-- 
+  =====================================
+   Array array 
+  =====================================
+  -->
+  <ng-container [formGroup]="objeto">
+    <div class="row">
+      <div class="col-12 col-md-4">
+        <h5>Desayuno</h5>
+        <!-- 
+        =====================================
+         Array desayuno 
+        =====================================
+        -->
+
+        <ng-container formArrayName="desayuno">
+          <ng-container
+            *ngFor="let dummy of objeto.get('desayuno').controls; let i = index"
+          >
+            <ng-container [formGroupName]="i">
+              <!-- 
+          =====================================
+           desayuno
+          =====================================
+          -->
+              <div class="col-12">
+                <div class="form-group">
+                  <input
+                    [formControl]="dummy"
+                    (keyup.enter)="
+                      agregarControl(objeto.get('desayuno').controls)
+                    "
+                    type="text"
+                    class="form-control"
+                  />
+                  <small class="form-text text-muted">
+                    <a
+                      (click)="
+                        objeto.get('desayuno').controls.length > 1
+                          ? objeto.get('desayuno').removeAt(i)
+                          : ''
+                      "
+                      href="javascript:void(0) "
+                      >Eliminar</a
+                    >
+                  </small>
+                </div>
+              </div>
+              <!-- 
+          =====================================
+           END desayuno
+          =====================================
+          -->
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <!-- 
+        =====================================
+         END Array desayuno 
+        =====================================
+        -->
+      </div>
+      <div class="col-12 col-md-4">
+        <h5>Colación</h5>
+        <!-- 
+        =====================================
+         Array colacionM 
+        =====================================
+        -->
+
+        <ng-container formArrayName="colacionM">
+          <ng-container
+            *ngFor="
+              let dummy of objeto.get('colacionM').controls;
+              let i = index
+            "
+          >
+            <ng-container [formGroupName]="i">
+              <!-- 
+          =====================================
+           colacionM
+          =====================================
+          -->
+              <div class="col-12">
+                <div class="form-group">
+                  <input
+                    [formControl]="dummy"
+                    (keyup.enter)="
+                      agregarControl(objeto.get('colacionM').controls)
+                    "
+                    type="text"
+                    class="form-control"
+                  />
+                  <small class="form-text text-muted">
+                    <a
+                      (click)="
+                        objeto.get('colacionM').controls.length > 1
+                          ? objeto.get('colacionM').removeAt(i)
+                          : ''
+                      "
+                      href="javascript:void(0) "
+                      >Eliminar</a
+                    >
+                  </small>
+                </div>
+              </div>
+              <!-- 
+          =====================================
+           END colacionM
+          =====================================
+          -->
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <!-- 
+        =====================================
+         END Array colacionM 
+        =====================================
+        -->
+      </div>
+      <div class="col-12 col-md-4">
+        <h5>Comida</h5>
+        <!-- 
+        =====================================
+         Array comida 
+        =====================================
+        -->
+
+        <ng-container formArrayName="comida">
+          <ng-container
+            *ngFor="let dummy of objeto.get('comida').controls; let i = index"
+          >
+            <ng-container [formGroupName]="i">
+              <!-- 
+          =====================================
+           comida
+          =====================================
+          -->
+              <div class="col-12">
+                <div class="form-group">
+                  <input
+                    [formControl]="dummy"
+                    (keyup.enter)="
+                      agregarControl(objeto.get('comida').controls)
+                    "
+                    type="text"
+                    class="form-control"
+                  />
+                  <small class="form-text text-muted">
+                    <a
+                      (click)="
+                        objeto.get('comida').controls.length > 1
+                          ? objeto.get('comida').removeAt(i)
+                          : ''
+                      "
+                      href="javascript:void(0) "
+                      >Eliminar</a
+                    >
+                  </small>
+                </div>
+              </div>
+              <!-- 
+          =====================================
+           END comida
+          =====================================
+          -->
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <!-- 
+        =====================================
+         END Array comida 
+        =====================================
+        -->
+      </div>
+      <div class="col-12 col-md-4">
+        <h5>Colacion Vespertina</h5>
+        <!-- 
+        =====================================
+         Array colacionV 
+        =====================================
+        -->
+
+        <ng-container formArrayName="colacionV">
+          <ng-container
+            *ngFor="
+              let dummy of objeto.get('colacionV').controls;
+              let i = index
+            "
+          >
+            <ng-container [formGroupName]="i">
+              <!-- 
+          =====================================
+           colacionV
+          =====================================
+          -->
+              <div class="col-12">
+                <div class="form-group">
+                  <input
+                    [formControl]="dummy"
+                    (keyup.enter)="
+                      agregarControl(objeto.get('colacionV').controls)
+                    "
+                    type="text"
+                    class="form-control"
+                  />
+                  <small class="form-text text-muted">
+                    <a
+                      (click)="
+                        objeto.get('colacionV').controls.length > 1
+                          ? objeto.get('colacionV').removeAt(i)
+                          : ''
+                      "
+                      href="javascript:void(0) "
+                      >Eliminar</a
+                    >
+                  </small>
+                </div>
+              </div>
+              <!-- 
+          =====================================
+           END colacionV
+          =====================================
+          -->
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <!-- 
+        =====================================
+         END Array colacionV 
+        =====================================
+        -->
+      </div>
+      <div class="col-12 col-md-4">
+        <h5>Cena</h5>
+
+        <!-- 
+            =====================================
+             Array cena 
+            =====================================
+            -->
+
+        <ng-container formArrayName="cena">
+          <ng-container
+            *ngFor="let dummy of objeto.get('cena').controls; let i = index"
+          >
+            <ng-container [formGroupName]="i">
+              <!-- 
+              =====================================
+               cena
+              =====================================
+              -->
+              <div class="col-12">
+                <div class="form-group">
+                  <input
+                    [formControl]="dummy"
+                    (keyup.enter)="agregarControl(objeto.get('cena').controls)"
+                    type="text"
+                    class="form-control"
+                  />
+                  <small class="form-text text-muted">
+                    <a
+                      (click)="
+                        objeto.get('cena').controls.length > 1
+                          ? objeto.get('cena').removeAt(i)
+                          : ''
+                      "
+                      href="javascript:void(0) "
+                      >Eliminar</a
+                    >
+                  </small>
+                </div>
+              </div>
+              <!-- 
+              =====================================
+               END cena
+              =====================================
+              -->
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <!-- 
+            =====================================
+             END Array cena 
+            =====================================
+            -->
+      </div>
+    </div>
+  </ng-container>
+  <!-- <ng-container [formControl]="objeto?.get('desayuno')"> -->
+  <!-- <ng-container *ngFor="let dummy of fa('array').controls; let i = index">
+  <ng-container [formGroupName]="i">
+  
+  </ng-container>
+  </ng-container> -->
+  <!-- </ng-container> -->
+  <!-- 
+  =====================================
+   END Array array 
+  =====================================
+  -->
 </ng-template>
 
 <codice-modal [id]="IdAntropometricos">
