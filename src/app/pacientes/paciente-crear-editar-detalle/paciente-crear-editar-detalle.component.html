@@ -1,3 +1,5 @@
+<pre>{{ this.formulario?.value | json }}</pre>
+
 <div *ngIf="formulario" class="row mt-3 para-detalle">
   <div class="col-12">
     <div class="card shadow">
@@ -734,6 +736,10 @@
                     type="text"
                     class="form-control"
                     formControlName="frecuenciaSemana"
+
+                    mask="separator.0"
+                    suffix =" veces/semana"
+
                   />
                   <small class="form-text text-muted">Frecuencia semana</small>
                   <app-validacion-inputs
@@ -764,6 +770,10 @@
                     type="text"
                     class="form-control"
                     formControlName="tiempoMinutos"
+
+                    
+                    mask="separator.0"
+                    suffix =" minutos"
                   />
                   <small class="form-text text-muted">Tiempo minutos</small>
                   <app-validacion-inputs
@@ -792,6 +802,9 @@
                     type="text"
                     class="form-control"
                     formControlName="intensidad"
+
+                    mask="separator.0"
+                    suffix =" g/intensidad"
                   />
                   <small class="form-text text-muted">Intensidad</small>
                   <app-validacion-inputs
@@ -814,7 +827,7 @@
               <ng-container formGroupName="r24h">
                 <div class="col-12">
                   <hr />
-                  <h4>Recordatorio 24 horas</h4>
+                  <h4 class="text-info">Recordatorio 24 horas</h4>
                 </div>
                 <div class="col-12">
                   <ng-container
@@ -828,7 +841,7 @@
               <ng-container formGroupName="tiemposDeComida">
                 <div class="col-12">
                   <hr />
-                  <h4>Tiempos de comida</h4>
+                  <h4 class="text-info">Tiempos de comida</h4>
                 </div>
                 <div class="col-12">
                   <ng-container

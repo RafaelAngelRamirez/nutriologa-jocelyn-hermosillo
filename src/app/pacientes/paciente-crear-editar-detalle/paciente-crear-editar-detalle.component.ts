@@ -121,7 +121,7 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
       sexo: new FormControl(paciente.sexo, [Validators.required]),
       celular: new FormControl(paciente.celular, [Validators.required]),
       metasDelPaciente: new FormArray(
-        paciente.metasDelPaciente?.map(this.cbArray) ?? [new FormControl()]
+        this.popularArray(paciente.metasDelPaciente)
       ),
 
       condicionActual: new FormGroup({
@@ -167,7 +167,7 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
             paciente.condicionActual?.problemasGastroIntestinales?.distencionAbdominal
           ),
           otro: new FormControl(
-            paciente.condicionActual?.problemasGastroIntestinales?.distencionAbdominal
+            paciente.condicionActual?.problemasGastroIntestinales?.otro
           ),
         }),
       }),
@@ -197,20 +197,20 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
 
   crearHabitos(objeto: TiemposDeHabitos) {
     return new FormGroup({
-      desayuno: new FormArray(this.popularArray(objeto.desayuno)),
-      colacionM: new FormArray(this.popularArray(objeto.colacionM)),
-      comida: new FormArray(this.popularArray(objeto.comida)),
-      colacionV: new FormArray(this.popularArray(objeto.colacionV)),
-      cena: new FormArray(this.popularArray(objeto.cena)),
+      desayuno: new FormArray(this.popularArray(objeto?.desayuno)),
+      colacionM: new FormArray(this.popularArray(objeto?.colacionM)),
+      comida: new FormArray(this.popularArray(objeto?.comida)),
+      colacionV: new FormArray(this.popularArray(objeto?.colacionV)),
+      cena: new FormArray(this.popularArray(objeto?.cena)),
     });
   }
 
   popularArray(arreglo: string[]) {
-    if (arreglo?.length === 0) return [new FormControl()];
+    if (!arreglo) return [new FormControl()];
     return arreglo.map(this.cbArray);
   }
 
-  cbArray = (x) => new FormControl();
+  cbArray = (x) => new FormControl(x);
   f(campo: string) {
     return this.formulario.get(campo);
   }
