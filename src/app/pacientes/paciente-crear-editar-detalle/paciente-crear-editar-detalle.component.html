@@ -1,5 +1,3 @@
-<pre>{{ this.formulario?.value | json }}</pre>
-
 <div *ngIf="formulario" class="row mt-3 para-detalle">
   <div class="col-12">
     <div class="card shadow">
@@ -140,7 +138,7 @@
             <ng-container formArrayName="metasDelPaciente">
               <ng-container
                 *ngFor="
-                  let dummy of fa('metasDelPaciente').controls;
+                  let dummy of fa('metasDelPaciente')?.controls;
                   let i = index
                 "
               >
@@ -736,10 +734,8 @@
                     type="text"
                     class="form-control"
                     formControlName="frecuenciaSemana"
-
                     mask="separator.0"
-                    suffix =" veces/semana"
-
+                    suffix=" veces/semana"
                   />
                   <small class="form-text text-muted">Frecuencia semana</small>
                   <app-validacion-inputs
@@ -770,10 +766,8 @@
                     type="text"
                     class="form-control"
                     formControlName="tiempoMinutos"
-
-                    
                     mask="separator.0"
-                    suffix =" minutos"
+                    suffix=" minutos"
                   />
                   <small class="form-text text-muted">Tiempo minutos</small>
                   <app-validacion-inputs
@@ -802,9 +796,8 @@
                     type="text"
                     class="form-control"
                     formControlName="intensidad"
-
                     mask="separator.0"
-                    suffix =" g/intensidad"
+                    suffix=" g/intensidad"
                   />
                   <small class="form-text text-muted">Intensidad</small>
                   <app-validacion-inputs
@@ -830,12 +823,320 @@
                   <h4 class="text-info">Recordatorio 24 horas</h4>
                 </div>
                 <div class="col-12">
-                  <ng-container
-                    [ngTemplateOutlet]="habitosAlimentarios"
-                    [ngTemplateOutletContext]="{
-                      objeto: fg('habitosAlimentarios.r24h')
-                    }"
-                  ></ng-container>
+                  <div class="row">
+                    <div class="col-12 col-sm-3">
+                      <h6>Desayuno</h6>
+
+                      <!-- 
+                  =====================================
+                   Array desayuno 
+                  =====================================
+                  -->
+                      <ng-container formArrayName="desayuno">
+                        <ng-container
+                          *ngFor="
+                            let dummy of fa('habitosAlimentarios.r24h.desayuno')
+                              ?.controls;
+                            let i = index
+                          "
+                        >
+                          <ng-container [formGroupName]="i">
+                            <!-- 
+=====================================
+ desayuno
+=====================================
+-->
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control"
+                                [formControl]="dummy"
+                                (keyup.enter)="
+                                  agregarControl(
+                                    fa('habitosAlimentarios.r24h.desayuno')
+                                  )
+                                "
+                              />
+                              <small id="helpId" class="form-text text-muted">
+                                <a
+                                  (click)="
+                                    eliminarControl(
+                                      fa('habitosAlimentarios.r24h.desayuno'),
+                                      i
+                                    )
+                                  "
+                                  class="text-danger"
+                                  href="javascript:void(0)"
+                                  *ngIf="!esDetalle"
+                                  >Eliminar</a
+                                >
+                              </small>
+                            </div>
+                            <!-- 
+=====================================
+ END desayuno
+=====================================
+-->
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <!-- 
+                  =====================================
+                   END Array desayuno 
+                  =====================================
+                  -->
+                    </div>
+                    <div class="col-12 col-sm-3">
+                      <h6>Colación M.</h6>
+
+                      <!-- 
+                  =====================================
+                   Array colacionM 
+                  =====================================
+                  -->
+                      <ng-container formArrayName="colacionM">
+                        <ng-container
+                          *ngFor="
+                            let dummy of fa(
+                              'habitosAlimentarios.r24h.colacionM'
+                            )?.controls;
+                            let i = index
+                          "
+                        >
+                          <ng-container [formGroupName]="i">
+                            <!-- 
+=====================================
+ colacionM
+=====================================
+-->
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control"
+                                [formControl]="dummy"
+                                (keyup.enter)="
+                                  agregarControl(
+                                    fa('habitosAlimentarios.r24h.colacionM')
+                                  )
+                                "
+                              />
+                              <small id="helpId" class="form-text text-muted">
+                                <a
+                                  (click)="
+                                    eliminarControl(
+                                      fa('habitosAlimentarios.r24h.colacionM'),
+                                      i
+                                    )
+                                  "
+                                  class="text-danger"
+                                  href="javascript:void(0)"
+                                  *ngIf="!esDetalle"
+                                  >Eliminar</a
+                                >
+                              </small>
+                            </div>
+                            <!-- 
+=====================================
+ END colacionM
+=====================================
+-->
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <!-- 
+                  =====================================
+                   END Array colacionM 
+                  =====================================
+                  -->
+                    </div>
+                    <div class="col-12 col-sm-3">
+                      <h6>Comida</h6>
+
+                      <!-- 
+                  =====================================
+                   Array comida 
+                  =====================================
+                  -->
+                      <ng-container formArrayName="comida">
+                        <ng-container
+                          *ngFor="
+                            let dummy of fa('habitosAlimentarios.r24h.comida')
+                              ?.controls;
+                            let i = index
+                          "
+                        >
+                          <ng-container [formGroupName]="i">
+                            <!-- 
+=====================================
+ comida
+=====================================
+-->
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control"
+                                [formControl]="dummy"
+                                (keyup.enter)="
+                                  agregarControl(
+                                    fa('habitosAlimentarios.r24h.comida')
+                                  )
+                                "
+                              />
+                              <small id="helpId" class="form-text text-muted">
+                                <a
+                                  (click)="
+                                    eliminarControl(
+                                      fa('habitosAlimentarios.r24h.comida'),
+                                      i
+                                    )
+                                  "
+                                  class="text-danger"
+                                  href="javascript:void(0)"
+                                  *ngIf="!esDetalle"
+                                  >Eliminar</a
+                                >
+                              </small>
+                            </div>
+                            <!-- 
+=====================================
+ END comida
+=====================================
+-->
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <!-- 
+                  =====================================
+                   END Array comida 
+                  =====================================
+                  -->
+                    </div>
+                    <div class="col-12 col-sm-3">
+                      <h6>Colación V.</h6>
+
+                      <!-- 
+                  =====================================
+                   Array colacionV 
+                  =====================================
+                  -->
+                      <ng-container formArrayName="colacionV">
+                        <ng-container
+                          *ngFor="
+                            let dummy of fa(
+                              'habitosAlimentarios.r24h.colacionV'
+                            )?.controls;
+                            let i = index
+                          "
+                        >
+                          <ng-container [formGroupName]="i">
+                            <!-- 
+=====================================
+ colacionV
+=====================================
+-->
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control"
+                                [formControl]="dummy"
+                                (keyup.enter)="
+                                  agregarControl(
+                                    fa('habitosAlimentarios.r24h.colacionV')
+                                  )
+                                "
+                              />
+                              <small id="helpId" class="form-text text-muted">
+                                <a
+                                  (click)="
+                                    eliminarControl(
+                                      fa('habitosAlimentarios.r24h.colacionV'),
+                                      i
+                                    )
+                                  "
+                                  class="text-danger"
+                                  href="javascript:void(0)"
+                                  *ngIf="!esDetalle"
+                                  >Eliminar</a
+                                >
+                              </small>
+                            </div>
+                            <!-- 
+=====================================
+ END colacionV
+=====================================
+-->
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <!-- 
+                  =====================================
+                   END Array colacionV 
+                  =====================================
+                  -->
+                    </div>
+                    <div class="col-12 col-sm-3">
+                      <h6>Cena</h6>
+
+                      <!-- 
+                  =====================================
+                   Array cena 
+                  =====================================
+                  -->
+                      <ng-container formArrayName="cena">
+                        <ng-container
+                          *ngFor="
+                            let dummy of fa('habitosAlimentarios.r24h.cena')
+                              ?.controls;
+                            let i = index
+                          "
+                        >
+                          <ng-container [formGroupName]="i">
+                            <!-- 
+=====================================
+ cena
+=====================================
+-->
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control"
+                                [formControl]="dummy"
+                                (keyup.enter)="
+                                  agregarControl(
+                                    fa('habitosAlimentarios.r24h.cena')
+                                  )
+                                "
+                              />
+                              <small id="helpId" class="form-text text-muted">
+                                <a
+                                  (click)="
+                                    eliminarControl(
+                                      fa('habitosAlimentarios.r24h.cena'),
+                                      i
+                                    )
+                                  "
+                                  class="text-danger"
+                                  href="javascript:void(0)"
+                                  *ngIf="!esDetalle"
+                                  >Eliminar</a
+                                >
+                              </small>
+                            </div>
+                            <!-- 
+=====================================
+ END cena
+=====================================
+-->
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <!-- 
+                  =====================================
+                   END Array cena 
+                  =====================================
+                  -->
+                    </div>
+                  </div>
                 </div>
               </ng-container>
               <ng-container formGroupName="tiemposDeComida">
@@ -844,12 +1145,343 @@
                   <h4 class="text-info">Tiempos de comida</h4>
                 </div>
                 <div class="col-12">
-                  <ng-container
-                    [ngTemplateOutlet]="habitosAlimentarios"
-                    [ngTemplateOutletContext]="{
-                      objeto: fg('habitosAlimentarios.tiemposDeComida')
-                    }"
-                  ></ng-container>
+                  <div class="row">
+                    <div class="col-12 col-sm-3">
+                      <h6>Desayuno</h6>
+
+                      <!-- 
+                  =====================================
+                   Array desayuno 
+                  =====================================
+                  -->
+                      <ng-container formArrayName="desayuno">
+                        <ng-container
+                          *ngFor="
+                            let dummy of fa(
+                              'habitosAlimentarios.tiemposDeComida.desayuno'
+                            )?.controls;
+                            let i = index
+                          "
+                        >
+                          <ng-container [formGroupName]="i">
+                            <!-- 
+=====================================
+ desayuno
+=====================================
+-->
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control"
+                                [formControl]="dummy"
+                                (keyup.enter)="
+                                  agregarControl(
+                                    fa(
+                                      'habitosAlimentarios.tiemposDeComida.desayuno'
+                                    )
+                                  )
+                                "
+                              />
+                              <small id="helpId" class="form-text text-muted">
+                                <a
+                                  (click)="
+                                    eliminarControl(
+                                      fa(
+                                        'habitosAlimentarios.tiemposDeComida.desayuno'
+                                      ),
+                                      i
+                                    )
+                                  "
+                                  class="text-danger"
+                                  href="javascript:void(0)"
+                                  *ngIf="!esDetalle"
+                                  >Eliminar</a
+                                >
+                              </small>
+                            </div>
+                            <!-- 
+=====================================
+ END desayuno
+=====================================
+-->
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <!-- 
+                  =====================================
+                   END Array desayuno 
+                  =====================================
+                  -->
+                    </div>
+                    <div class="col-12 col-sm-3">
+                      <h6>Colación M.</h6>
+
+                      <!-- 
+                  =====================================
+                   Array colacionM 
+                  =====================================
+                  -->
+                      <ng-container formArrayName="colacionM">
+                        <ng-container
+                          *ngFor="
+                            let dummy of fa(
+                              'habitosAlimentarios.tiemposDeComida.colacionM'
+                            )?.controls;
+                            let i = index
+                          "
+                        >
+                          <ng-container [formGroupName]="i">
+                            <!-- 
+=====================================
+ colacionM
+=====================================
+-->
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control"
+                                [formControl]="dummy"
+                                (keyup.enter)="
+                                  agregarControl(
+                                    fa(
+                                      'habitosAlimentarios.tiemposDeComida.colacionM'
+                                    )
+                                  )
+                                "
+                              />
+                              <small id="helpId" class="form-text text-muted">
+                                <a
+                                  (click)="
+                                    eliminarControl(
+                                      fa(
+                                        'habitosAlimentarios.tiemposDeComida.colacionM'
+                                      ),
+                                      i
+                                    )
+                                  "
+                                  class="text-danger"
+                                  href="javascript:void(0)"
+                                  *ngIf="!esDetalle"
+                                  >Eliminar</a
+                                >
+                              </small>
+                            </div>
+                            <!-- 
+=====================================
+ END colacionM
+=====================================
+-->
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <!-- 
+                  =====================================
+                   END Array colacionM 
+                  =====================================
+                  -->
+                    </div>
+                    <div class="col-12 col-sm-3">
+                      <h6>Comida</h6>
+
+                      <!-- 
+                  =====================================
+                   Array comida 
+                  =====================================
+                  -->
+                      <ng-container formArrayName="comida">
+                        <ng-container
+                          *ngFor="
+                            let dummy of fa(
+                              'habitosAlimentarios.tiemposDeComida.comida'
+                            )?.controls;
+                            let i = index
+                          "
+                        >
+                          <ng-container [formGroupName]="i">
+                            <!-- 
+=====================================
+ comida
+=====================================
+-->
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control"
+                                [formControl]="dummy"
+                                (keyup.enter)="
+                                  agregarControl(
+                                    fa(
+                                      'habitosAlimentarios.tiemposDeComida.comida'
+                                    )
+                                  )
+                                "
+                              />
+                              <small id="helpId" class="form-text text-muted">
+                                <a
+                                  (click)="
+                                    eliminarControl(
+                                      fa(
+                                        'habitosAlimentarios.tiemposDeComida.comida'
+                                      ),
+                                      i
+                                    )
+                                  "
+                                  class="text-danger"
+                                  href="javascript:void(0)"
+                                  *ngIf="!esDetalle"
+                                  >Eliminar</a
+                                >
+                              </small>
+                            </div>
+                            <!-- 
+=====================================
+ END comida
+=====================================
+-->
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <!-- 
+                  =====================================
+                   END Array comida 
+                  =====================================
+                  -->
+                    </div>
+                    <div class="col-12 col-sm-3">
+                      <h6>Colación V.</h6>
+
+                      <!-- 
+                  =====================================
+                   Array colacionV 
+                  =====================================
+                  -->
+                      <ng-container formArrayName="colacionV">
+                        <ng-container
+                          *ngFor="
+                            let dummy of fa(
+                              'habitosAlimentarios.tiemposDeComida.colacionV'
+                            )?.controls;
+                            let i = index
+                          "
+                        >
+                          <ng-container [formGroupName]="i">
+                            <!-- 
+=====================================
+ colacionV
+=====================================
+-->
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control"
+                                [formControl]="dummy"
+                                (keyup.enter)="
+                                  agregarControl(
+                                    fa(
+                                      'habitosAlimentarios.tiemposDeComida.colacionV'
+                                    )
+                                  )
+                                "
+                              />
+                              <small id="helpId" class="form-text text-muted">
+                                <a
+                                  (click)="
+                                    eliminarControl(
+                                      fa(
+                                        'habitosAlimentarios.tiemposDeComida.colacionV'
+                                      ),
+                                      i
+                                    )
+                                  "
+                                  class="text-danger"
+                                  href="javascript:void(0)"
+                                  *ngIf="!esDetalle"
+                                  >Eliminar</a
+                                >
+                              </small>
+                            </div>
+                            <!-- 
+=====================================
+ END colacionV
+=====================================
+-->
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <!-- 
+                  =====================================
+                   END Array colacionV 
+                  =====================================
+                  -->
+                    </div>
+                    <div class="col-12 col-sm-3">
+                      <h6>Cena</h6>
+
+                      <!-- 
+                  =====================================
+                   Array cena 
+                  =====================================
+                  -->
+                      <ng-container formArrayName="cena">
+                        <ng-container
+                          *ngFor="
+                            let dummy of fa(
+                              'habitosAlimentarios.tiemposDeComida.cena'
+                            )?.controls;
+                            let i = index
+                          "
+                        >
+                          <ng-container [formGroupName]="i">
+                            <!-- 
+=====================================
+ cena
+=====================================
+-->
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control"
+                                [formControl]="dummy"
+                                (keyup.enter)="
+                                  agregarControl(
+                                    fa(
+                                      'habitosAlimentarios.tiemposDeComida.cena'
+                                    )
+                                  )
+                                "
+                              />
+                              <small id="helpId" class="form-text text-muted">
+                                <a
+                                  (click)="
+                                    eliminarControl(
+                                      fa(
+                                        'habitosAlimentarios.tiemposDeComida.cena'
+                                      ),
+                                      i
+                                    )
+                                  "
+                                  class="text-danger"
+                                  href="javascript:void(0)"
+                                  *ngIf="!esDetalle"
+                                  >Eliminar</a
+                                >
+                              </small>
+                            </div>
+                            <!-- 
+=====================================
+ END cena
+=====================================
+-->
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                      <!-- 
+                  =====================================
+                   END Array cena 
+                  =====================================
+                  -->
+                    </div>
+                  </div>
                 </div>
               </ng-container>
             </ng-container>
@@ -913,9 +1545,7 @@
         -->
 
         <ng-container formArrayName="desayuno">
-          <ng-container
-            *ngFor="let dummy of objeto.get('desayuno').controls; let i = index"
-          >
+          <ng-container *ngFor="let dummy of dummy?.controls; let i = index">
             <ng-container [formGroupName]="i">
               <!-- 
           =====================================
@@ -927,19 +1557,16 @@
                   <input
                     [formControl]="dummy"
                     (keyup.enter)="
-                      agregarControl(objeto.get('desayuno').controls)
+                      agregarControl(dummy.get('desayuno')?.controls)
                     "
                     type="text"
                     class="form-control"
                   />
                   <small class="form-text text-muted">
                     <a
-                      (click)="
-                        objeto.get('desayuno').controls.length > 1
-                          ? objeto.get('desayuno').removeAt(i)
-                          : ''
-                      "
+                      (click)="eliminarControl(dummy.get('desayuno'), i)"
                       href="javascript:void(0) "
+                      *ngIf="!esDetalle"
                       >Eliminar</a
                     >
                   </small>
@@ -970,7 +1597,7 @@
         <ng-container formArrayName="colacionM">
           <ng-container
             *ngFor="
-              let dummy of objeto.get('colacionM').controls;
+              let dummy of dummy.get('colacionM')?.controls;
               let i = index
             "
           >
@@ -985,7 +1612,7 @@
                   <input
                     [formControl]="dummy"
                     (keyup.enter)="
-                      agregarControl(objeto.get('colacionM').controls)
+                      agregarControl(dummy.get('colacionM')?.controls)
                     "
                     type="text"
                     class="form-control"
@@ -993,11 +1620,12 @@
                   <small class="form-text text-muted">
                     <a
                       (click)="
-                        objeto.get('colacionM').controls.length > 1
-                          ? objeto.get('colacionM').removeAt(i)
+                        dummy.get('colacionM')?.controls.length > 1
+                          ? dummy.get('colacionM').removeAt(i)
                           : ''
                       "
                       href="javascript:void(0) "
+                      *ngIf="!esDetalle"
                       >Eliminar</a
                     >
                   </small>
@@ -1027,7 +1655,7 @@
 
         <ng-container formArrayName="comida">
           <ng-container
-            *ngFor="let dummy of objeto.get('comida').controls; let i = index"
+            *ngFor="let dummy of dummy.get('comida')?.controls; let i = index"
           >
             <ng-container [formGroupName]="i">
               <!-- 
@@ -1040,7 +1668,7 @@
                   <input
                     [formControl]="dummy"
                     (keyup.enter)="
-                      agregarControl(objeto.get('comida').controls)
+                      agregarControl(dummy.get('comida')?.controls)
                     "
                     type="text"
                     class="form-control"
@@ -1048,11 +1676,12 @@
                   <small class="form-text text-muted">
                     <a
                       (click)="
-                        objeto.get('comida').controls.length > 1
-                          ? objeto.get('comida').removeAt(i)
+                        dummy.get('comida')?.controls.length > 1
+                          ? dummy.get('comida').removeAt(i)
                           : ''
                       "
                       href="javascript:void(0) "
+                      *ngIf="!esDetalle"
                       >Eliminar</a
                     >
                   </small>
@@ -1083,7 +1712,7 @@
         <ng-container formArrayName="colacionV">
           <ng-container
             *ngFor="
-              let dummy of objeto.get('colacionV').controls;
+              let dummy of dummy.get('colacionV')?.controls;
               let i = index
             "
           >
@@ -1098,7 +1727,7 @@
                   <input
                     [formControl]="dummy"
                     (keyup.enter)="
-                      agregarControl(objeto.get('colacionV').controls)
+                      agregarControl(dummy.get('colacionV')?.controls)
                     "
                     type="text"
                     class="form-control"
@@ -1106,11 +1735,12 @@
                   <small class="form-text text-muted">
                     <a
                       (click)="
-                        objeto.get('colacionV').controls.length > 1
-                          ? objeto.get('colacionV').removeAt(i)
+                        dummy.get('colacionV')?.controls.length > 1
+                          ? dummy.get('colacionV').removeAt(i)
                           : ''
                       "
                       href="javascript:void(0) "
+                      *ngIf="!esDetalle"
                       >Eliminar</a
                     >
                   </small>
@@ -1141,7 +1771,7 @@
 
         <ng-container formArrayName="cena">
           <ng-container
-            *ngFor="let dummy of objeto.get('cena').controls; let i = index"
+            *ngFor="let dummy of dummy.get('cena')?.controls; let i = index"
           >
             <ng-container [formGroupName]="i">
               <!-- 
@@ -1153,18 +1783,19 @@
                 <div class="form-group">
                   <input
                     [formControl]="dummy"
-                    (keyup.enter)="agregarControl(objeto.get('cena').controls)"
+                    (keyup.enter)="agregarControl(dummy.get('cena')?.controls)"
                     type="text"
                     class="form-control"
                   />
                   <small class="form-text text-muted">
                     <a
                       (click)="
-                        objeto.get('cena').controls.length > 1
-                          ? objeto.get('cena').removeAt(i)
+                        dummy.get('cena')?.controls.length > 1
+                          ? dummy.get('cena').removeAt(i)
                           : ''
                       "
                       href="javascript:void(0) "
+                      *ngIf="!esDetalle"
                       >Eliminar</a
                     >
                   </small>
@@ -1186,13 +1817,7 @@
       </div>
     </div>
   </ng-container>
-  <!-- <ng-container [formControl]="objeto?.get('desayuno')"> -->
-  <!-- <ng-container *ngFor="let dummy of fa('array').controls; let i = index">
-  <ng-container [formGroupName]="i">
-  
-  </ng-container>
-  </ng-container> -->
-  <!-- </ng-container> -->
+
   <!-- 
   =====================================
    END Array array 

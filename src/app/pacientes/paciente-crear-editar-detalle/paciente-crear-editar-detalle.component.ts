@@ -206,7 +206,7 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
   }
 
   popularArray(arreglo: string[]) {
-    if (!arreglo) return [new FormControl()];
+    if (!arreglo || arreglo?.length === 0) return [new FormControl()];
     return arreglo.map(this.cbArray);
   }
 
@@ -217,9 +217,6 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
 
   fa(campo: string) {
     return this.f(campo) as FormArray;
-  }
-  fg(campo: string) {
-    return this.f(campo) as FormGroup;
   }
 
   formatearFecha(date: Date) {
@@ -238,11 +235,9 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
     }
 
     this.cargando = true;
-
     const operacion = modelo._id
       ? this.pacienteService.modificar(modelo)
       : this.pacienteService.crear(modelo);
-
     operacion.subscribe(
       () => {
         this.location.back();
@@ -267,13 +262,9 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
     arreglo.push(new FormControl());
   }
 
-  eliminarControl(control: FormControl, i: number, formArray: FormArray) {
-    
-    
-    console.log(control.value)
-    
-    if (control?.value?.length === 0) {
-      formArray.removeAt(i);
+  eliminarControl(array: FormArray, i: number) {
+    if (array.length > 0) {
+      array.removeAt(i);
       return;
     }
   }
