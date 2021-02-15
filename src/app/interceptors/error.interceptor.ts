@@ -29,6 +29,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           errorMessage = `${error.error}`;
         }
 
+        if (error?.text) errorMessage.concat(error.text);
+
         // aquí podrías agregar código que muestre el error en alguna parte fija de la pantalla.
         this.notiSerivce.toast.error(errorMessage);
         return throwError(errorMessage);
