@@ -57,6 +57,7 @@ export interface TiemposDeHabitos {
 }
 
 export interface DatosAntropometricos {
+  _id:string,
   compensacion: number;
   peso: number;
   // talla es la estatura
