@@ -34,7 +34,8 @@ export class PacienteService {
     );
   }
 
-  modificarDatoAntropometrico(model: DatosAntropometricos) {
+  modificarDatoAntropometrico(model: any) {
+    console.log("servicio", model)
     return this.http.put<Paciente>(
       this.base.concat('/datos-antropometricos/modificar'),
       model

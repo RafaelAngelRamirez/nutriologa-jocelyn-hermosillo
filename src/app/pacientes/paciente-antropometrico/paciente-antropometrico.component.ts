@@ -63,6 +63,7 @@ export class PacienteAntropometricoComponent implements OnInit {
 
   crearFormulario(datos: Partial<DatosAntropometricos>) {
     this.formulario = new FormGroup({
+      _id: new FormControl(datos?._id),
       compensacion: new FormControl(datos?.compensacion),
       peso: new FormControl(datos?.peso, [Validators.required]),
       talla: new FormControl(datos?.talla, [Validators.required]),
@@ -143,7 +144,7 @@ export class PacienteAntropometricoComponent implements OnInit {
 
   obtenerCaloriasTrimestre() {
     return this.calculosService.obtenerCaloriasTrimestre(
-      this.paciente.condicionActual.ultimaMenstruacion
+      this.paciente?.condicionActual?.ultimaMenstruacion
     );
   }
 
@@ -174,23 +175,61 @@ export class PacienteAntropometricoComponent implements OnInit {
     if (invalid || this.formulario.disabled) return;
 
     model['idPaciente'] = this.paciente._id;
-
-    let operacion = this.editando
-      ? this.pacienteService.crearDatoAntropometrico(model)
-      : this.pacienteService.modificarDatoAntropometrico(model);
-
     this.cargando = true;
-    operacion.subscribe(
+
+    this.datos?.datoAntropometrico?._id
+      ? this.guardarModificacion(model)
+      : this.guardarNuevo(model);
+  }
+
+  guardarModificacion(model: any) {
+    this.pacienteService.modificarDatoAntropometrico(model).subscribe(
+      (paciente) => {
+        this.guardado.emit(paciente);
+        this.paciente = paciente;
+
+        this.cargando = false;
+        this.editando = false;
+        this.esDetalle = true;
+      },
+      () => (this.cargando = false)
+    );
+  }
+
+  guardarNuevo(model: any) {
+    this.pacienteService.crearDatoAntropometrico(model).subscribe(
       (paciente) => {
         this.paciente = paciente;
         this.guardado.emit(paciente);
         this.cargando = false;
         this.editando = false;
         this.esDetalle = true;
-        this.crearFormulario({});
       },
       () => (this.cargando = false)
     );
+  }
+
+  editar() {
+    this.esDetalle = false;
+    this.editando = true;
+  }
+
+  eliminar() {
+    if (this.cargando) return;
+    this.cargando = true;
+    this.pacienteService
+      .eliminarDataoAntropometrico(
+        this.datos.datoAntropometrico._id,
+        this.paciente._id
+      )
+      .subscribe(() => {
+        // Eliminamos del paciente este dato.
+        this.paciente.datosAntropometricos = this.paciente.datosAntropometricos.filter(
+          (x) => x._id !== this.datos.datoAntropometrico._id
+        );
+
+        this.cargando = false;
+      });
   }
 }
 

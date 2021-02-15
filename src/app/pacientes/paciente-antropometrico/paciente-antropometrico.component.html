@@ -3,7 +3,24 @@
     <hr />
     <h1 *ngIf="editando">Antropométrico</h1>
     <h4 *ngIf="esDetalle" class="text-muted">
-      Consulta:{{ datos?.datoAntropometrico?.fecha | date }}
+      Consulta del {{ datos?.datoAntropometrico?.fecha | date }}
+
+      <a
+        (click)="editar()"
+        class="btn btn-info"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i *ngIf="!cargando; else cargaTemplate" class="fas fa-edit"></i
+      ></a>
+      <a
+        (click)="eliminar()"
+        class="btn btn-danger ml-3"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i *ngIf="!cargando; else cargaTemplate" class="fas fa-times"></i
+      ></a>
     </h4>
 
     <div *ngIf="formulario" class="form" [formGroup]="formulario">
@@ -363,7 +380,12 @@ END peso
       href="javascript:void(0)"
       role="button"
     >
+      <i *ngIf="!cargando; else cargaTemplate" class="fas fa-save"></i>
       Guardar</a
     >
   </div>
 </div>
+
+<ng-template #cargaTemplate>
+  <i class="fas fa-sync fa-spin"></i>
+</ng-template>

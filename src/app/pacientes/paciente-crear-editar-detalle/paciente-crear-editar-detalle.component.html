@@ -1567,6 +1567,8 @@
       esDetalle: false,
       esEdicion: true
     }"
-    (guardado)="this.crearFormulario($event)"
+    (guardado)="
+      crearFormulario($event); this.modalService.close(IdAntropometricos)
+    "
   ></app-paciente-antropometrico>
 </codice-modal>

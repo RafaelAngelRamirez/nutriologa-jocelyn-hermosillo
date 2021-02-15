@@ -52,10 +52,6 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerId();
-
-    setTimeout(() => {
-      this.modalService.open(this.IdAntropometricos);
-    }, 1000);
   }
 
   protocoloDetalle() {
