@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Paciente } from 'src/app/models/paciente.model';
 import { DatosAntropometricos } from '../../models/paciente.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidacionesService } from '../../services/validaciones.service';
 import { UtilidadesService } from '../../services/utilidades.service';
 import { CalculosNutricionService } from '../../services/calculos-nutricion.service';
+import { PacienteService } from 'src/app/services/paciente.service';
 
 @Component({
   selector: 'app-paciente-antropometrico',
@@ -15,45 +16,70 @@ export class PacienteAntropometricoComponent implements OnInit {
   constructor(
     public vs: ValidacionesService,
     private calculosService: CalculosNutricionService,
-    public utilidadesService: UtilidadesService
+    public utilidadesService: UtilidadesService,
+    private pacienteService: PacienteService
   ) {}
 
-  private _datos: [Partial<DatosAntropometricos>, Paciente];
-  public get datos(): [Partial<DatosAntropometricos>, Paciente] {
+  private _datos: PacienteAntropometricoOpciones;
+  public get datos(): PacienteAntropometricoOpciones {
     return this._datos;
   }
-  @Input('datos')
-  public set datos(value: [Partial<DatosAntropometricos>, Paciente]) {
+  @Input()
+  public set datos(value: PacienteAntropometricoOpciones) {
     this._datos = value;
-    this.paciente = value[1];
-    this.crearFormulario(value[0]);
+    this.paciente = value.paciente;
+    this.crearFormulario(value.datoAntropometrico);
+    this.esDetalle = value.esDetalle;
+    this.editando = value.esEdicion;
   }
 
-  paciente: Paciente;
+  @Output() guardado = new EventEmitter<Paciente>();
+
+  paciente: Partial<Paciente>;
 
   ngOnInit(): void {}
 
   formulario: FormGroup;
+  editando: boolean;
+  private _esDetalle: boolean;
+  public get esDetalle(): boolean {
+    return this._esDetalle;
+  }
+  public set esDetalle(value: boolean) {
+    this._esDetalle = value;
+    if (value) this.formulario?.disable();
+    else this.formulario.enable();
+  }
+
+  private _cargando = false;
+  public get cargando() {
+    return this._cargando;
+  }
+  public set cargando(value) {
+    this._cargando = value;
+    if (value) this.formulario.disable();
+    else this.formulario.enable();
+  }
 
   crearFormulario(datos: Partial<DatosAntropometricos>) {
     this.formulario = new FormGroup({
-      compensacion: new FormControl(datos.compensacion),
-      peso: new FormControl(datos.peso, [Validators.required]),
-      talla: new FormControl(datos.talla, [Validators.required]),
-      circunferenciaCintura: new FormControl(datos.circunferenciaCintura, [
+      compensacion: new FormControl(datos?.compensacion),
+      peso: new FormControl(datos?.peso, [Validators.required]),
+      talla: new FormControl(datos?.talla, [Validators.required]),
+      circunferenciaCintura: new FormControl(datos?.circunferenciaCintura, [
         Validators.required,
       ]),
-      circunferenciaAbdomen: new FormControl(datos.circunferenciaAbdomen, [
+      circunferenciaAbdomen: new FormControl(datos?.circunferenciaAbdomen, [
         Validators.required,
       ]),
-      circunferenciaCadera: new FormControl(datos.circunferenciaCadera, [
+      circunferenciaCadera: new FormControl(datos?.circunferenciaCadera, [
         Validators.required,
       ]),
-      masaMuscular: new FormControl(datos.masaMuscular, [Validators.required]),
-      porcentajeDeGrasa: new FormControl(datos.porcentajeDeGrasa, [
+      masaMuscular: new FormControl(datos?.masaMuscular, [Validators.required]),
+      porcentajeDeGrasa: new FormControl(datos?.porcentajeDeGrasa, [
         Validators.required,
       ]),
-      porcentajeDeAgua: new FormControl(datos.porcentajeDeAgua, [
+      porcentajeDeAgua: new FormControl(datos?.porcentajeDeAgua, [
         Validators.required,
       ]),
     });
@@ -77,7 +103,7 @@ export class PacienteAntropometricoComponent implements OnInit {
 
   claveColorDiagnostico = this.calculosService.claveColorDiagnostico;
 
-  imcDiagnostico(imc: number) {
+  imcDiagnostico() {
     return this.calculosService.imcDiagnostico(this.imc());
   }
 
@@ -135,10 +161,42 @@ export class PacienteAntropometricoComponent implements OnInit {
     const ger = this.gastoEnergeticoReposo();
     const calEmbarazo = this.obtenerCaloriasTrimestre() ?? 0;
     const compensacion = this.f('compensacion')?.value;
-    const resultadoCompensacion = ger  * (compensacion / 100);
+    const resultadoCompensacion = ger * (compensacion / 100);
     const gastoTotal = ger + calEmbarazo;
     const resultado = resultadoCompensacion + gastoTotal;
-    console.log({ ger, calEmbarazo, compensacion, resultado });
     return resultado;
   }
+
+  submit(model: any, invalid: boolean) {
+    this.formulario.markAllAsTouched();
+    this.formulario.updateValueAndValidity();
+
+    if (invalid || this.formulario.disabled) return;
+
+    model['idPaciente'] = this.paciente._id;
+
+    let operacion = this.editando
+      ? this.pacienteService.crearDatoAntropometrico(model)
+      : this.pacienteService.modificarDatoAntropometrico(model);
+
+    this.cargando = true;
+    operacion.subscribe(
+      (paciente) => {
+        this.paciente = paciente;
+        this.guardado.emit(paciente);
+        this.cargando = false;
+        this.editando = false;
+        this.esDetalle = true;
+        this.crearFormulario({});
+      },
+      () => (this.cargando = false)
+    );
+  }
+}
+
+export interface PacienteAntropometricoOpciones {
+  datoAntropometrico: DatosAntropometricos;
+  paciente: Paciente;
+  esDetalle: boolean;
+  esEdicion: boolean;
 }

@@ -1492,45 +1492,81 @@
       </div>
     </div>
   </div>
+
+  <ng-template #botonGuardado>
+    <div *ngIf="!esDetalle" class="col-12">
+      <hr />
+      <a
+        (click)="submit(formulario?.value, formulario.invalid)"
+        class="btn btn-success"
+        href="javascript:void(0)"
+        role="button"
+      >
+        <i class="fas fa-save"></i>
+
+        Guardar</a
+      >
+    </div>
+
+    <div *ngIf="esDetalle" class="col-12">
+      <hr />
+
+      <a
+        class="btn btn-warning mr-1"
+        role="button"
+        (click)="modificar(paciente)"
+      >
+        <i class="fas fa-edit"></i> Editar
+      </a>
+
+      <a
+        class="btn btn-primary ml-md-5"
+        role="button"
+        (click)="modalService.open(IdAntropometricos)"
+      >
+        <i class="fas fa-weight"></i>
+      </a>
+      <br />
+      <br />
+    </div>
+  </ng-template>
+
+  <div class="col-12 mt-3">
+    <div class="card shadow">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <hr />
+            <h1>Antropométricos</h1>
+          </div>
+
+          <div class="col-12 table-responsive">
+            <app-paciente-antropometrico
+              *ngFor="let item of paciente.datosAntropometricos"
+              [datos]="{
+                datoAntropometrico: item,
+                paciente: paciente,
+                esDetalle: true,
+                esEdicion: false
+              }"
+              (guardado)="this.crearFormulario($event)"
+            >
+            </app-paciente-antropometrico>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<ng-template #botonGuardado>
-  <div *ngIf="!esDetalle" class="col-12">
-    <hr />
-    <a
-      (click)="submit(formulario?.value, formulario.invalid)"
-      class="btn btn-success"
-      href="javascript:void(0)"
-      role="button"
-    >
-      <i class="fas fa-save"></i>
-
-      Guardar</a
-    >
-  </div>
-
-  <div *ngIf="esDetalle" class="col-12">
-    <hr />
-
-    <a class="btn btn-warning mr-1" role="button" (click)="modificar(paciente)">
-      <i class="fas fa-edit"></i> Editar
-    </a>
-
-    <a
-      class="btn btn-primary ml-md-5"
-      role="button"
-      (click)="modalService.open(IdAntropometricos)"
-    >
-      <i class="fas fa-weight"></i>
-    </a>
-    <br />
-    <br />
-  </div>
-</ng-template>
 
 <codice-modal [id]="IdAntropometricos">
   <app-paciente-antropometrico
-    [datos]="[{}, paciente]"
+    [datos]="{
+      datoAntroPometrico: {},
+      paciente: paciente,
+      esDetalle: false,
+      esEdicion: true
+    }"
     (guardado)="this.crearFormulario($event)"
   ></app-paciente-antropometrico>
 </codice-modal>

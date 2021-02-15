@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Paciente } from '../models/paciente.model';
+import { Paciente, DatosAntropometricos } from '../models/paciente.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,6 @@ export class PacienteService {
   }
 
   crear(modelo: Paciente) {
-    console.log(modelo)
     return this.http.post<Paciente>(this.base, modelo);
   }
 
@@ -26,5 +25,25 @@ export class PacienteService {
 
   leerTodo() {
     return this.http.get<Paciente[]>(this.base);
+  }
+
+  crearDatoAntropometrico(model: any) {
+    return this.http.put<Paciente>(
+      this.base.concat('/datos-antropometricos/crear'),
+      model
+    );
+  }
+
+  modificarDatoAntropometrico(model: DatosAntropometricos) {
+    return this.http.put<Paciente>(
+      this.base.concat('/datos-antropometricos/modificar'),
+      model
+    );
+  }
+
+  eliminarDataoAntropometrico(idDatoAntro: string, idPaciente: number) {
+    return this.http.delete<DatosAntropometricos>(
+      this.base.concat(`/datos-antropometricos/${idPaciente}/${idDatoAntro}`)
+    );
   }
 }

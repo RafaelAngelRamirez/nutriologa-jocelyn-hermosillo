@@ -1,7 +1,11 @@
 <div class="row">
   <div class="col-12">
-    <h1>Antropométrico</h1>
     <hr />
+    <h1 *ngIf="editando">Antropométrico</h1>
+    <h4 *ngIf="esDetalle" class="text-muted">
+      Consulta:{{ datos?.datoAntropometrico?.fecha | date }}
+    </h4>
+
     <div *ngIf="formulario" class="form" [formGroup]="formulario">
       <div class="row">
         <div class="col-12">
@@ -350,5 +354,16 @@ END peso
 -->
       </div>
     </div>
+  </div>
+  <div *ngIf="editando" class="col-12">
+    <hr />
+    <a
+      (click)="submit(formulario.value, formulario.invalid)"
+      class="btn btn-success"
+      href="javascript:void(0)"
+      role="button"
+    >
+      Guardar</a
+    >
   </div>
 </div>
