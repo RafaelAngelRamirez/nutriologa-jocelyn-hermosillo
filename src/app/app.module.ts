@@ -21,7 +21,9 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ModalModule } from '@codice-progressio/modal';
 import { PacienteAntropometricoComponent } from './pacientes/paciente-antropometrico/paciente-antropometrico.component';
 
-import {NgxMaskModule} from 'ngx-mask'
+import {NgxMaskModule} from 'ngx-mask';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment'
 
 const appRoutes: Routes = [
   { path: 'pacientes', component: PacientesListaComponent },
@@ -64,6 +66,7 @@ const appRoutes: Routes = [
       progressAnimation: 'increasing',
     }),
     ModalModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     DatePipe,
