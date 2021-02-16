@@ -1,46 +1,37 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a
-      [routerLink]="['/pacientes']"
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarTogglerDemo01"
+    aria-controls="navbarTogglerDemo01"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <a [routerLink]="['/pacientes']"
       routerLinkActive="router-link-active"
       class="navbar-brand"
-      >LN Jocelyn Hermosillo
-    </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a
-            class="btn btn-outline-dark"
-            tabindex="-1"
-            aria-disabled="true"
-            [routerLink]="['/nuevo-paciente']"
-            routerLinkActive="router-link-active"
-            >Nuevo paciente</a
-          >
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-      </form>
-    </div>
+      >LN Jocelyn Hermosillo </a>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a
+          class="btn btn-outline-dark"
+          tabindex="-1"
+          aria-disabled="true"
+          [routerLink]="['/nuevo-paciente']"
+          routerLinkActive="router-link-active"
+          >Nuevo paciente</a
+        >
+      </li>
+    </ul>
+    
   </div>
 </nav>
+
+
 
 <div class="container">
   <router-outlet></router-outlet>
