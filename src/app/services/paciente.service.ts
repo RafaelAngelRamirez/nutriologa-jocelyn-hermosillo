@@ -19,6 +19,10 @@ export class PacienteService {
     return this.http.post<Paciente>(this.base, modelo);
   }
 
+  eliminar(paciente: Paciente) {
+    return this.http.delete<null>(this.base.concat('/id/' + paciente._id));
+  }
+
   modificar(modelo: Paciente) {
     return this.http.put<Paciente>(this.base, modelo);
   }
@@ -35,7 +39,6 @@ export class PacienteService {
   }
 
   modificarDatoAntropometrico(model: any) {
-    console.log("servicio", model)
     return this.http.put<Paciente>(
       this.base.concat('/datos-antropometricos/modificar'),
       model

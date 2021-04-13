@@ -226,6 +226,7 @@ export class PacienteCrearEditarDetalleComponent implements OnInit {
     this.fa('metasDelPaciente').push(new FormControl());
   }
   submit(modelo: any, invalid) {
+    if (this.cargando) return;
     this.formulario.markAllAsTouched();
     this.formulario.updateValueAndValidity();
 

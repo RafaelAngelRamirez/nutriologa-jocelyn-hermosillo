@@ -2,7 +2,10 @@
   <div class="col-12">
     <div class="card shadow">
       <div class="card-body table-responsive">
-        <table class="table">
+        <h1 *ngIf="cargando" class="w-100 display-1 text-center">
+          <i class="fas fa-sync fa-spin"></i>
+        </h1>
+        <table *ngIf="!cargando" class="table">
           <thead>
             <tr>
               <th></th>
@@ -18,11 +21,19 @@
               <td>
                 <a
                   (click)="detalle(paciente)"
-                  class="btn btn-primary"
+                  class="btn btn-primary mr-md-1"
                   href="javascript:void(0)"
                   role="button"
                 >
-                  Detalle
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a
+                  (click)="eliminar(paciente)"
+                  class="btn btn-danger m-sm-1"
+                  href="javascript:void(0)"
+                  role="button"
+                >
+                  <i class="fas fa-times-circle"></i>
                 </a>
               </td>
 
