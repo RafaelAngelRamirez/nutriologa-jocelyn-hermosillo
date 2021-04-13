@@ -1,4 +1,4 @@
-<div *ngIf="formulario" class="row mt-3 para-detalle">
+<div *ngIf="formulario; else cargandoTemplate" class="row mt-3 para-detalle">
   <div class="col-12">
     <div class="card shadow">
       <div class="card-body">
@@ -1572,3 +1572,15 @@
     "
   ></app-paciente-antropometrico>
 </codice-modal>
+
+<ng-template #cargandoTemplate>
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="card-body text-center">
+          <h1 class="w-100 display-1"><i class="fa-spin fa-sync fas"></i></h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
