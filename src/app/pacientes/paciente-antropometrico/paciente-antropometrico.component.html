@@ -93,6 +93,34 @@
         </div>
 
         <!-- 
+=====================================
+ peso
+=====================================
+-->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('peso')),
+                'is-valid': vs.valid(f('peso'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="peso"
+              mask="separator.2"
+              suffix=" kg"
+            />
+            <small id="helpId" class="form-text text-muted">Peso</small>
+            <app-validacion-inputs [campo]="f('peso')"></app-validacion-inputs>
+          </div>
+        </div>
+        <!-- 
+=====================================
+END peso
+=====================================
+-->
+
+        <!-- 
         =====================================
          compensacion
         =====================================
@@ -124,29 +152,65 @@
 
         <!-- 
 =====================================
- peso
+ porcentajeDeGrasa
 =====================================
 -->
         <div class="col-12 col-sm-6 col-lg-2">
           <div class="form-group">
             <input
               [ngClass]="{
-                'is-invalid': vs.invalid(f('peso')),
-                'is-valid': vs.valid(f('peso'))
+                'is-invalid': vs.invalid(f('porcentajeDeGrasa')),
+                'is-valid': vs.valid(f('porcentajeDeGrasa'))
               }"
               type="text"
               class="form-control"
-              formControlName="peso"
+              formControlName="porcentajeDeGrasa"
               mask="separator.2"
-              suffix=" kg"
+              suffix=" %"
             />
-            <small id="helpId" class="form-text text-muted">Peso</small>
-            <app-validacion-inputs [campo]="f('peso')"></app-validacion-inputs>
+            <small id="helpId" class="form-text text-muted"
+              >Porcentaje de grasa</small
+            >
+            <app-validacion-inputs
+              [campo]="f('porcentajeDeGrasa')"
+            ></app-validacion-inputs>
           </div>
         </div>
         <!-- 
 =====================================
-END peso
+END porcentajeDeGrasa
+=====================================
+-->
+
+        <!-- 
+=====================================
+porcentajeDeAgua
+=====================================
+-->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <div class="form-group">
+            <input
+              [ngClass]="{
+                'is-invalid': vs.invalid(f('porcentajeDeAgua')),
+                'is-valid': vs.valid(f('porcentajeDeAgua'))
+              }"
+              type="text"
+              class="form-control"
+              formControlName="porcentajeDeAgua"
+              mask="separator.2"
+              suffix=" %"
+            />
+            <small id="helpId" class="form-text text-muted"
+              >Porcentaje de agua</small
+            >
+            <app-validacion-inputs
+              [campo]="f('porcentajeDeAgua')"
+            ></app-validacion-inputs>
+          </div>
+        </div>
+        <!-- 
+=====================================
+END porcentajeDeAgua
 =====================================
 -->
 
@@ -303,70 +367,6 @@ END peso
         <!-- 
 =====================================
  END masaMuscular
-=====================================
--->
-
-        <!-- 
-=====================================
- porcentajeDeGrasa
-=====================================
--->
-        <div class="col-12 col-sm-6 col-lg-2">
-          <div class="form-group">
-            <input
-              [ngClass]="{
-                'is-invalid': vs.invalid(f('porcentajeDeGrasa')),
-                'is-valid': vs.valid(f('porcentajeDeGrasa'))
-              }"
-              type="text"
-              class="form-control"
-              formControlName="porcentajeDeGrasa"
-              mask="separator.2"
-              suffix=" %"
-            />
-            <small id="helpId" class="form-text text-muted"
-              >Porcentaje de grasa</small
-            >
-            <app-validacion-inputs
-              [campo]="f('porcentajeDeGrasa')"
-            ></app-validacion-inputs>
-          </div>
-        </div>
-        <!-- 
-=====================================
- END porcentajeDeGrasa
-=====================================
--->
-
-        <!-- 
-=====================================
- porcentajeDeAgua
-=====================================
--->
-        <div class="col-12 col-sm-6 col-lg-2">
-          <div class="form-group">
-            <input
-              [ngClass]="{
-                'is-invalid': vs.invalid(f('porcentajeDeAgua')),
-                'is-valid': vs.valid(f('porcentajeDeAgua'))
-              }"
-              type="text"
-              class="form-control"
-              formControlName="porcentajeDeAgua"
-              mask="separator.2"
-              suffix=" %"
-            />
-            <small id="helpId" class="form-text text-muted"
-              >Porcentaje de agua</small
-            >
-            <app-validacion-inputs
-              [campo]="f('porcentajeDeAgua')"
-            ></app-validacion-inputs>
-          </div>
-        </div>
-        <!-- 
-=====================================
- END porcentajeDeAgua
 =====================================
 -->
       </div>
